@@ -16,12 +16,15 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   font-family: var(--font-body);
   background: var(--color-offwhite);
   color: var(--color-navy);
+  overflow-x: hidden;
+  overflow-wrap: break-word;
 }
 
 @media (prefers-reduced-motion: reduce) {

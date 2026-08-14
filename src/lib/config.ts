@@ -8,7 +8,20 @@ export const CONTACT_PHONE_DISPLAY = "+959 798 822 267";
 export const CONTACT_PHONE_HREF = "tel:+959798822267";
 
 // Get a free key at https://web3forms.com/#get-started — no password required.
-export const WEB3FORMS_ACCESS_KEY = "929bd158-c131-49b2-9cc3-381308a1aa6d";
+export const WEB3FORMS_ACCESS_KEY = "REPLACE_WITH_YOUR_WEB3FORMS_KEY";
+
+// "Service Interested In" dropdown — shared by the main Contact page form and
+// every quick-contact form (ContactCTA) so the list can't drift between them.
+export const SERVICE_INQUIRY_OPTIONS = [
+  'Social Media Management',
+  'Website Development',
+  'Performance Marketing',
+  'SEO Copywriting',
+  'SEO & AI Search Optimization',
+  'Video Editing / Reels',
+  'Marketing Training & Workshops',
+  'Something else',
+];
 
 // Section-level visibility toggles — same on/off pattern as SHOW_PRICING above,
 // and SHOW_SOCIAL_LINKS below. Once Decap CMS is set up, each of these becomes a
@@ -52,6 +65,14 @@ export const pageMeta = {
   contact: {
     title: "Contact Passion Hub | Start Your Marketing Project",
     description: "Ready to move your marketing forward? Contact Passion Hub today for a free consultation on branding, social media, and digital marketing services.",
+  },
+  thankYou: {
+    title: "Thank You | Passion Hub",
+    description: "Thanks for reaching out to Passion Hub — we'll be in touch within one business day.",
+  },
+  training: {
+    title: "Marketing Training & Workshops in Myanmar | Passion Hub",
+    description: "Practical marketing training for companies and individuals — corporate team training, masterclasses, custom workshops, and 1:1 coaching from the Passion Hub team.",
   },
 };
 
@@ -207,6 +228,46 @@ export const serviceCategories: ServiceCategory[] = [
     slug: "seo-ai-search-optimization",
     desc: "Getting found — on Google, and increasingly, on AI search.",
     items: ["Technical SEO", "On-Page SEO", "Content Optimization", "Local SEO", "AI Search Optimization"],
+  },
+  {
+    name: "Marketing Training & Workshops",
+    slug: "training-workshops",
+    desc: "Practical, hands-on marketing training for teams and individuals — not just theory.",
+    items: ["Corporate Training", "Masterclasses", "Custom Workshops", "1:1 Coaching"],
+  },
+];
+
+export interface TrainingPackage {
+  name: string;
+  bestFor: string;
+  desc: string;
+  structure: string;
+}
+
+export const trainingPackages: TrainingPackage[] = [
+  {
+    name: "Team Training",
+    bestFor: "Best for companies onboarding a new marketing hire or upskilling an existing team.",
+    desc: "A structured multi-session program covering digital strategy, social media, and performance marketing fundamentals, delivered to your team as a group so everyone builds shared vocabulary and working knowledge together.",
+    structure: "4 sessions, ~2 hours each, delivered over 2–3 weeks — on-site, online, or hybrid.",
+  },
+  {
+    name: "Marketing Masterclasses",
+    bestFor: "Best for teams or individuals wanting a deep dive into one specific topic.",
+    desc: "A single focused session on one topic, chosen from a running list — e.g. \"Paid Social Fundamentals,\" \"SEO Basics for Non-Marketers,\" \"Reading Your Analytics,\" \"Content Strategy 101.\"",
+    structure: "Single 2–3 hour session, topic selected in advance.",
+  },
+  {
+    name: "Custom Corporate Workshops",
+    bestFor: "Best for companies with a specific challenge or goal.",
+    desc: "A workshop built entirely around your brand and situation — preparing for a product launch, building an internal content calendar process, or solving a specific marketing bottleneck your team is facing.",
+    structure: "Scoped individually after a discovery call; typically a half-day or full-day session.",
+  },
+  {
+    name: "1:1 Marketing Coaching",
+    bestFor: "Best for individual professionals or business owners running their own marketing.",
+    desc: "Ongoing, personalized guidance as you build or run your own marketing — structured around your specific goals and current skill gaps, revisited and adjusted as you progress.",
+    structure: "Recurring sessions (e.g. biweekly or monthly), 60–90 minutes each, ongoing engagement.",
   },
 ];
 

@@ -1,0 +1,169 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContactCTA from '../../components/ContactCTA.astro';
+import { pageMeta, trainingPackages } from '../../lib/config';
+
+const whyTrain = [
+  { title: "Built from real client work, not theory.", desc: "Every framework we teach is one we actually use — this isn't recycled textbook material." },
+  { title: "Tailored, not templated.", desc: "Sessions are shaped around your industry, your team's current skill level, and the specific gaps you're trying to close." },
+  { title: "Flexible by design.", desc: "In-person, online, or hybrid — and scaled to fit anywhere from a 1:1 session to a full team, not a fixed headcount." },
+  { title: "Led by practitioners.", desc: "Trained by the same team that plans and runs live campaigns for brands across Myanmar and the wider region — not a training-only division disconnected from actual client work." },
+];
+
+const corporateCurriculum = [
+  { title: "Digital strategy fundamentals", desc: "How to think about channel selection, positioning, and budget allocation before jumping into execution." },
+  { title: "Social media management in practice", desc: "Content planning, posting cadence, and what actually drives engagement versus vanity metrics." },
+  { title: "Performance marketing basics", desc: "How paid campaigns are structured, what the key metrics mean, and how to read a campaign report without a marketing background." },
+  { title: "Content creation fundamentals", desc: "Writing and briefing content that stays on-brand, even for non-writers." },
+  { title: "Reading analytics with confidence", desc: "Turning a dashboard full of numbers into an actual decision." },
+];
+
+const howItWorks = [
+  { title: "Discovery Call", desc: "A short conversation to understand your team's (or your own) current skill level, goals, and what \"success\" looks like for the training." },
+  { title: "Custom Curriculum", desc: "We shape the session content and format around what actually applies to your industry and situation — no generic, off-the-shelf deck." },
+  { title: "Delivery", desc: "Hands-on, practical sessions — in-person, online, or hybrid — built around real examples, not passive lecturing." },
+  { title: "Takeaway Resources", desc: "Every session comes with reference materials your team can return to afterward, so the learning doesn't disappear when the session ends." },
+];
+
+const faqs = [
+  { question: "Do you train in-person or online?", answer: "Both — delivered on-site at your office, fully online, or a hybrid mix, whichever fits your team best." },
+  { question: "How many people can join a session?", answer: "Flexible by design — from an intimate 1:1 coaching session to a full team, we shape the format around the group in front of us, not the other way around." },
+  { question: "Can workshops be customized to our industry?", answer: "Yes — Custom Corporate Workshops are built specifically around your brand, team, and current challenge, and even our structured packages (Team Training, Masterclasses) are tailored to your industry rather than delivered off-the-shelf." },
+  { question: "Do we need any marketing background to join?", answer: "No — sessions are built to meet your team where they currently are, whether that's complete beginners or people who already have some marketing experience and want to go deeper." },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map(f => ({
+    "@type": "Question",
+    name: f.question,
+    acceptedAnswer: { "@type": "Answer", text: f.answer },
+  })),
+};
+---
+
+<Layout title={pageMeta.training.title} description={pageMeta.training.description}>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="bg-navy text-white">
+    <div class="max-w-4xl mx-auto px-6 pt-24 pb-20 md:pt-28 md:pb-24">
+      <a href="/services" class="text-sm text-teal font-semibold hover:underline">&larr; All Services</a>
+      <div class="flex items-center gap-3 mt-8 mb-6">
+        <span class="h-px w-10 bg-coral"></span>
+        <span class="text-xs uppercase tracking-[0.2em] text-teal font-semibold">Marketing Training &amp; Workshops</span>
+      </div>
+      <h1 class="font-display text-4xl md:text-5xl leading-tight max-w-2xl">Marketing Training Built for Real-World Application.</h1>
+      <p class="mt-6 text-white/70 max-w-2xl leading-relaxed text-lg">
+        Most marketing training stays theoretical — frameworks and slide decks that don't translate into what to actually do on Monday morning. Ours is built the other way around: practical, hands-on sessions drawn from the same strategies we use running live campaigns for our own clients. Whether you're building marketing capability inside your company or sharpening your own skills as an individual, every session is designed to leave you with something you can apply immediately, not just notes you'll never reopen.
+      </p>
+    </div>
+  </section>
+
+  <!-- WHY TRAIN WITH US -->
+  <section class="max-w-4xl mx-auto px-6 py-16 md:py-20">
+    <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">Why Train With Passion Hub</span>
+    <h2 class="font-display text-2xl md:text-3xl mt-4 mb-10">What makes it different.</h2>
+    <div class="grid sm:grid-cols-2 gap-8">
+      {whyTrain.map(w => (
+        <div class="slash-accent pl-6">
+          <h3 class="font-display text-lg font-semibold mb-2">{w.title}</h3>
+          <p class="text-sm text-navy/78 leading-relaxed">{w.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CORPORATE TRAINING -->
+  <section class="bg-cream/50">
+    <div class="max-w-4xl mx-auto px-6 py-16 md:py-20">
+      <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">For Companies</span>
+      <h2 class="font-display text-2xl md:text-3xl mt-4 mb-4">Corporate Marketing Training</h2>
+      <p class="text-navy/80 leading-relaxed max-w-2xl mb-10">
+        For companies looking to upskill an internal marketing team, or give wider staff — sales, product, leadership — a working understanding of how marketing actually operates day to day. This isn't a generic "marketing 101" deck; sessions are tailored to your industry, your current tools and channels, and the specific skill gaps your team already knows they have.
+      </p>
+      <p class="text-sm font-semibold uppercase tracking-wide text-navy/70 mb-5">Typical curriculum areas (mixed and matched to what your team needs)</p>
+      <div class="space-y-6">
+        {corporateCurriculum.map(item => (
+          <div class="border-b border-navy/10 pb-6">
+            <h3 class="font-display text-lg font-semibold mb-2">{item.title}</h3>
+            <p class="text-sm text-navy/78 leading-relaxed">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+      <p class="mt-8 text-sm text-navy/70 leading-relaxed">Delivered on-site at your office, fully online, or a hybrid mix — whichever fits your team's schedule and location best.</p>
+    </div>
+  </section>
+
+  <!-- PROFESSIONAL TRAINING -->
+  <section class="max-w-4xl mx-auto px-6 py-16 md:py-20">
+    <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">For Individuals</span>
+    <h2 class="font-display text-2xl md:text-3xl mt-4 mb-4">Professional Marketing Training</h2>
+    <p class="text-navy/80 leading-relaxed max-w-2xl">
+      For individual marketers, business owners, or career switchers who want skills they can put to work immediately, not just terminology. Delivered in a small-group or one-on-one format, focused on practical execution: how to actually plan a campaign, read performance data without guessing, and make smart decisions with a limited budget — the things most marketing courses skip in favor of theory.
+    </p>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="bg-cream/50">
+    <div class="max-w-4xl mx-auto px-6 py-16 md:py-20">
+      <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">How It Works</span>
+      <h2 class="font-display text-2xl md:text-3xl mt-4 mb-10">From first conversation to a session that fits.</h2>
+      <div class="grid sm:grid-cols-2 gap-8">
+        {howItWorks.map((step, i) => (
+          <div class="slash-accent pl-6">
+            <div class="text-coral font-display text-sm mb-2">Step {i + 1}</div>
+            <h3 class="font-display text-lg font-semibold mb-2">{step.title}</h3>
+            <p class="text-sm text-navy/78 leading-relaxed">{step.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAINING PACKAGES -->
+  <section class="max-w-6xl mx-auto px-6 py-16 md:py-20">
+    <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">Training Packages</span>
+    <h2 class="font-display text-2xl md:text-3xl mt-4 mb-10 max-w-2xl">Four ways to build marketing capability.</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      {trainingPackages.map(pkg => (
+        <div class="p-8 border border-navy/10 bg-offwhite flex flex-col">
+          <h3 class="font-display text-xl font-semibold mb-2">{pkg.name}</h3>
+          <p class="text-xs font-semibold uppercase tracking-wide text-navy/55 mb-3">{pkg.bestFor}</p>
+          <p class="text-sm text-navy/78 leading-relaxed mb-4">{pkg.desc}</p>
+          <p class="text-sm text-navy/62 leading-relaxed mt-auto pt-4 border-t border-navy/10">
+            <span class="font-semibold text-navy/75">Suggested structure: </span>{pkg.structure}
+          </p>
+        </div>
+      ))}
+    </div>
+    <p class="mt-6 text-xs text-navy/55 leading-relaxed max-w-2xl">
+      Session counts, cadence, and pricing above are starting suggestions — every engagement is scoped to fit your team, so exact details are confirmed with you directly before a session is booked.
+    </p>
+  </section>
+
+  <!-- FAQ -->
+  <section class="bg-navy text-white">
+    <div class="max-w-4xl mx-auto px-6 py-16 md:py-20">
+      <span class="text-xs uppercase tracking-[0.2em] text-teal font-semibold">Frequently Asked Questions</span>
+      <h2 class="font-display text-2xl md:text-3xl mt-4 mb-10">Common questions, answered.</h2>
+      <div class="space-y-6">
+        {faqs.map(faq => (
+          <div class="border-b border-white/10 pb-6">
+            <h3 class="font-display text-lg font-semibold mb-2">{faq.question}</h3>
+            <p class="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ContactCTA
+    id="training-cta"
+    heading="Ask About Training"
+    subtext="Tell us about your team (or yourself) and what you're hoping to get out of it — we'll take it from there."
+    sourceLabel="Training & Workshops Page"
+    defaultService="Marketing Training & Workshops"
+    maxWidth="max-w-4xl"
+  />
+</Layout>

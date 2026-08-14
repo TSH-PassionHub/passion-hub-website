@@ -7,15 +7,19 @@ import { servicesData } from '../lib/servicesData';
 interface Props {
   title: string;
   description?: string;
+  /** Absolute or root-relative path to a 1200x630 image. Defaults to the sitewide OG image. */
+  ogImage?: string;
   noindex?: boolean;
 }
 const {
   title,
   description = "Passion Hub — Branding & Digital Marketing agency with 10+ years of experience across Myanmar, Cambodia, Laos, and Thailand.",
+  ogImage = "/images/general/og-image.jpg",
   noindex = false,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, SITE_URL).toString();
+const ogImageURL = new URL(ogImage, SITE_URL).toString();
 
 const navItems = [
   { label: 'Home', href: '/' },
@@ -27,8 +31,12 @@ const navItems = [
 ];
 
 // Submenu items for "Services" — sourced directly from servicesData so all
-// 5 services always appear here and never fall out of sync with the pages.
-const serviceLinks = servicesData.map(s => ({ label: s.eyebrow, href: `/services/${s.slug}` }));
+// 5 core services always appear here and never fall out of sync with the pages.
+// Training & Workshops is appended manually since it uses its own page template.
+const serviceLinks = [
+  ...servicesData.map(s => ({ label: s.eyebrow, href: `/services/${s.slug}` })),
+  { label: 'Marketing Training & Workshops', href: '/services/training-workshops' },
+];
 
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -63,9 +71,13 @@ const organizationSchema = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:site_name" content="Passion Hub" />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
 
     <title>{title}</title>
     <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
@@ -82,7 +94,7 @@ const organizationSchema = {
           {navItems.map(item => (
             item.label === 'Services' ? (
               <div class="relative group">
-                <a href={item.href} class="inline-flex items-center gap-1 text-[15px] font-medium text-navy/85 hover:text-navy transition-colors">
+                <a href={item.href} class="inline-flex items-center gap-1 text-[15px] font-medium text-navy hover:text-navy-light transition-colors">
                   {item.label}
                   <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true" class="mt-0.5 transition-transform group-hover:rotate-180">
                     <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -97,7 +109,7 @@ const organizationSchema = {
                 </div>
               </div>
             ) : (
-              <a href={item.href} class="text-[15px] font-medium text-navy/85 hover:text-navy transition-colors">{item.label}</a>
+              <a href={item.href} class="text-[15px] font-medium text-navy hover:text-navy-light transition-colors">{item.label}</a>
             )
           ))}
         </nav>
@@ -113,15 +125,15 @@ const organizationSchema = {
           {navItems.map(item => (
             item.label === 'Services' ? (
               <div>
-                <a href={item.href} class="text-[15px] font-medium text-navy/85">{item.label}</a>
+                <a href={item.href} class="text-[15px] font-medium text-navy">{item.label}</a>
                 <div class="mt-2 ml-3 flex flex-col gap-2 border-l border-navy/15 pl-3">
                   {serviceLinks.map(link => (
-                    <a href={link.href} class="text-sm font-medium text-navy/75 hover:text-navy transition-colors">{link.label}</a>
+                    <a href={link.href} class="text-sm font-medium text-navy/85 hover:text-navy transition-colors">{link.label}</a>
                   ))}
                 </div>
               </div>
             ) : (
-              <a href={item.href} class="text-[15px] font-medium text-navy/85">{item.label}</a>
+              <a href={item.href} class="text-[15px] font-medium text-navy">{item.label}</a>
             )
           ))}
           <a href="/contact" class="inline-flex items-center justify-center bg-navy text-white text-sm font-semibold px-5 py-2.5 rounded-sm">Let's Talk</a>
@@ -134,6 +146,7 @@ const organizationSchema = {
     </main>
 
     <footer class="bg-navy text-white">
+      <div class="h-[3px] bg-gradient-to-r from-teal via-teal to-coral"></div>
       <div class="max-w-6xl mx-auto px-6 py-14 grid md:grid-cols-4 gap-10 text-center md:text-left">
         <div>
           <div class="flex items-center justify-center md:justify-start gap-3 mb-4">

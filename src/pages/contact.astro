@@ -6,21 +6,11 @@ import {
   CONTACT_PHONE_DISPLAY,
   CONTACT_PHONE_HREF,
   WEB3FORMS_ACCESS_KEY,
+  SERVICE_INQUIRY_OPTIONS,
   SHOW_SOCIAL_LINKS,
   SOCIAL_LINKS,
   pageMeta,
 } from '../lib/config';
-
-const serviceOptions = [
-  'Social Media Management',
-  'Website Development',
-  'App Development',
-  'Performance Marketing',
-  'SEO & AI Search Optimization',
-  'Video Editing / Reels',
-  'Logo Design',
-  'Something else',
-];
 ---
 
 <Layout title={pageMeta.contact.title} description={pageMeta.contact.description}>
@@ -70,7 +60,7 @@ const serviceOptions = [
           <label for="service" class="block text-sm font-medium mb-2">Service Interested In <span class="text-coral">*</span></label>
           <select required id="service" name="service" class="w-full border border-navy/20 bg-offwhite px-4 py-3 text-sm focus:outline-none focus:border-teal">
             <option value="">Select a service&hellip;</option>
-            {serviceOptions.map(s => <option value={s}>{s}</option>)}
+            {SERVICE_INQUIRY_OPTIONS.map(s => <option value={s}>{s}</option>)}
           </select>
         </div>
 
@@ -178,9 +168,8 @@ const serviceOptions = [
       });
       const result = await res.json();
       if (result.success) {
-        status.textContent = "Thanks — we've received your message and will get back to you shortly.";
-        status.className = 'text-sm mt-3 text-teal-dark';
-        form.reset();
+        window.location.href = '/thank-you';
+        return;
       } else {
         throw new Error(result.message || 'Something went wrong');
       }

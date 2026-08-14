@@ -2,14 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import ExpandablePillList from '../components/ExpandablePillList.astro';
 import ContactCTA from '../components/ContactCTA.astro';
+import SocialMediaPackages from '../components/SocialMediaPackages.astro';
 import {
-  SHOW_PRICING,
-  FB_MESSENGER_URL,
-  packageTiers,
-  comparisonRows,
-  feeDropCallout,
   projectBasedServices,
   addOnServices,
+  trainingPackages,
+  FB_MESSENGER_URL,
   pageMeta,
 } from '../lib/config';
 ---
@@ -30,95 +28,32 @@ import {
     </div>
   </section>
 
-  <!-- SOCIAL MEDIA PACKAGES -->
-  <section class="max-w-6xl mx-auto px-6 py-20 md:py-28">
-    <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">Social Media Packages</span>
-    <h2 class="font-display text-3xl md:text-4xl mt-4 mb-4 max-w-xl">Ongoing management, three ways to scale.</h2>
+  <SocialMediaPackages />
 
-    <div class="grid md:grid-cols-3 gap-6 mt-10">
-      {packageTiers.map(tier => (
-        <div class={`reveal p-8 border flex flex-col ${tier.featured ? 'bg-navy text-white border-navy' : 'bg-offwhite border-navy/10'}`}>
-          {tier.featured && <span class="text-xs uppercase tracking-widest text-teal font-semibold mb-2">Most popular</span>}
-          <div class="flex items-baseline gap-2">
-            <h3 class="font-display text-2xl font-semibold">{tier.name}</h3>
-            <span class={`font-display accent-slant text-lg ${tier.featured ? 'text-teal' : 'text-coral'}`}>"{tier.nickname}"</span>
-          </div>
-          <p class={`mt-3 text-xs font-semibold uppercase tracking-wide ${tier.featured ? 'text-white/50' : 'text-navy/55'}`}>{tier.bestFor}</p>
-          <p class={`mt-3 text-sm ${tier.featured ? 'text-white/65' : 'text-navy/70'}`}>
-            {tier.tagline}
-            {tier.feeCallout && <strong> — {tier.feeCallout}.</strong>}
-          </p>
-
-          <div class="mt-6 mb-2">
-            {SHOW_PRICING ? (
-              <>
-                <span class="font-display text-3xl font-semibold">{tier.price}</span>
-                <span class={tier.featured ? 'text-white/60 text-sm' : 'text-navy/60 text-sm'}>{tier.period}</span>
-              </>
-            ) : (
-              <span class={`inline-block text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full ${tier.featured ? 'bg-teal/20 text-teal' : 'bg-coral/10 text-coral'}`}>
-                Custom Quote
-              </span>
-            )}
-          </div>
-          <div class={`text-xs mb-6 ${tier.featured ? 'text-white/50' : 'text-navy/58'}`}>{tier.postCount}</div>
-
-          <ul class="space-y-3 text-sm flex-1">
-            {tier.deliverables.map(d => (
-              <li class={`flex gap-2 ${tier.featured ? 'text-white/80' : 'text-navy/78'}`}>
-                <span class="text-teal mt-0.5">&#10003;</span>
-                <span>{d}</span>
-              </li>
-            ))}
-          </ul>
-
-          <a
-            href={SHOW_PRICING ? '/contact' : FB_MESSENGER_URL}
-            target={SHOW_PRICING ? undefined : '_blank'}
-            rel={SHOW_PRICING ? undefined : 'noopener noreferrer'}
-            class={`mt-8 inline-flex items-center justify-center text-sm font-semibold px-6 py-3 rounded-sm transition-colors ${tier.featured ? 'bg-coral text-white hover:bg-coral/90' : 'bg-navy text-white hover:bg-navy-light'}`}
-          >
-            {SHOW_PRICING ? 'Get Started' : 'Get a Quote'}
-          </a>
-        </div>
-      ))}
-    </div>
-
-    <div class="mt-8 p-6 border-l-4 border-teal bg-teal/5 flex items-start gap-4">
-      <span class="text-teal text-2xl leading-none">&#8595;</span>
-      <p class="text-sm text-navy/85 leading-relaxed">{feeDropCallout}</p>
-    </div>
-  </section>
-
-  <!-- COMPARE PACKAGES -->
+  <!-- TRAINING PACKAGES -->
   <section class="bg-cream/50">
     <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
-      <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">Compare</span>
-      <h2 class="font-display text-3xl md:text-4xl mt-4 mb-6 max-w-xl">Standard vs Advanced vs Premium.</h2>
-      <p class="text-sm text-navy/62 mb-8 md:hidden">&larr; Swipe to compare all three tiers &rarr;</p>
-
-      <div class="overflow-x-auto relative">
-        <table class="w-full border-collapse min-w-[640px]">
-          <thead>
-            <tr class="border-b border-navy/15">
-              <th class="text-left py-4 pr-4 text-sm font-semibold text-navy/70">Feature</th>
-              {packageTiers.map(tier => (
-                <th class="text-left py-4 px-4 font-display text-lg font-semibold">{tier.name}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody class="text-sm">
-            {comparisonRows.map(row => (
-              <tr class="border-b border-navy/10">
-                <td class="py-4 pr-4 text-navy/70">{row.feature}</td>
-                {row.values.map(v => (
-                  <td class={`py-4 px-4 ${v === '✓' ? 'text-teal' : v === '—' ? 'text-navy/42' : ''}`}>{v}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">Training &amp; Workshops</span>
+      <h2 class="font-display text-3xl md:text-4xl mt-4 mb-4 max-w-xl">Four ways to build marketing capability.</h2>
+      <p class="text-sm text-navy/70 leading-relaxed max-w-2xl mb-10">Practical, hands-on marketing training for teams and individuals.</p>
+      <div class="grid md:grid-cols-2 gap-6">
+        {trainingPackages.map(pkg => (
+          <div class="p-8 border border-navy/10 bg-offwhite flex flex-col">
+            <h3 class="font-display text-xl font-semibold mb-2">{pkg.name}</h3>
+            <p class="text-xs font-semibold uppercase tracking-wide text-navy/55 mb-3">{pkg.bestFor}</p>
+            <p class="text-sm text-navy/78 leading-relaxed mb-4">{pkg.desc}</p>
+            <p class="text-sm text-navy/62 leading-relaxed mb-6 pt-4 border-t border-navy/10">
+              <span class="font-semibold text-navy/75">Suggested structure: </span>{pkg.structure}
+            </p>
+            <a href={FB_MESSENGER_URL} target="_blank" rel="noopener noreferrer" class="mt-auto inline-flex items-center justify-center bg-navy text-white text-sm font-semibold px-6 py-3 rounded-sm hover:bg-navy-light transition-colors">
+              Ask About This
+            </a>
+          </div>
+        ))}
       </div>
+      <p class="mt-6 text-xs text-navy/55 leading-relaxed max-w-2xl">
+        Session counts, cadence, and pricing above are starting suggestions — every engagement is scoped to fit your team, so exact details are confirmed with you directly before a session is booked.
+      </p>
     </div>
   </section>
 
