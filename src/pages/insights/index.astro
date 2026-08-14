@@ -50,7 +50,7 @@ const readTime = (body: string | undefined) => Math.max(1, Math.round((body || '
           <img src={featured.data.featuredImage || '/images/general/planning-desk.webp'} alt={featured.data.featuredImageAlt || featured.data.title} width="1000" height="1000" class="w-full h-full object-cover" loading="lazy" />
         </div>
         <div class="md:col-span-3">
-          <div class="flex items-center gap-3 text-xs text-navy/50 mb-4">
+          <div class="flex items-center gap-3 text-xs text-navy/60 mb-4">
             <span class="uppercase tracking-widest text-coral font-semibold">{featured.data.category}</span>
             <span>&middot;</span>
             <time datetime={featured.data.pubDate.toISOString()}>{dateFmt(featured.data.pubDate)}</time>
@@ -58,7 +58,7 @@ const readTime = (body: string | undefined) => Math.max(1, Math.round((body || '
             <span>{readTime(featured.body)} min read</span>
           </div>
           <h2 class="font-display text-2xl md:text-3xl font-semibold mb-3 leading-snug group-hover:text-coral transition-colors">{featured.data.title}</h2>
-          <p class="text-sm text-navy/65 leading-relaxed mb-4">{featured.data.description}</p>
+          <p class="text-sm text-navy/75 leading-relaxed mb-4">{featured.data.description}</p>
           <span class="text-sm font-semibold text-navy inline-flex items-center gap-1.5">
             Read more <span aria-hidden="true">&rarr;</span>
           </span>
@@ -72,7 +72,7 @@ const readTime = (body: string | undefined) => Math.max(1, Math.round((body || '
     <h2 class="font-display text-2xl md:text-3xl mt-4 mb-10">More from the team.</h2>
 
     {rest.length === 0 ? (
-      <p class="text-navy/60">More posts coming soon — check back shortly.</p>
+      <p class="text-navy/70">More posts coming soon — check back shortly.</p>
     ) : (
       <div id="insights-grid" class="grid md:grid-cols-2 gap-px bg-navy/10 border border-navy/10">
         {rest.map(post => (
@@ -81,7 +81,7 @@ const readTime = (body: string | undefined) => Math.max(1, Math.round((body || '
               <img src={post.data.featuredImage || '/images/general/planning-desk.webp'} alt={post.data.featuredImageAlt || post.data.title} width="800" height="450" class="w-full h-full object-cover" loading="lazy" />
             </div>
             <div class="p-8 flex flex-col flex-1">
-              <div class="flex items-center gap-3 text-xs text-navy/50 mb-4">
+              <div class="flex items-center gap-3 text-xs text-navy/60 mb-4">
                 <span class="uppercase tracking-widest text-coral font-semibold">{post.data.category}</span>
                 <span>&middot;</span>
                 <time datetime={post.data.pubDate.toISOString()}>{dateFmt(post.data.pubDate)}</time>
@@ -89,7 +89,7 @@ const readTime = (body: string | undefined) => Math.max(1, Math.round((body || '
                 <span>{readTime(post.body)} min read</span>
               </div>
               <h3 class="font-display text-2xl font-semibold mb-3 leading-snug">{post.data.title}</h3>
-              <p class="text-sm text-navy/65 leading-relaxed mb-4">{post.data.description}</p>
+              <p class="text-sm text-navy/75 leading-relaxed mb-4">{post.data.description}</p>
               <span class="mt-auto text-sm font-semibold text-navy inline-flex items-center gap-1.5">
                 Read more <span aria-hidden="true">&rarr;</span>
               </span>
@@ -98,7 +98,7 @@ const readTime = (body: string | undefined) => Math.max(1, Math.round((body || '
         ))}
       </div>
     )}
-    <p id="no-results" class="hidden text-navy/50 text-sm mt-6">No posts in this category yet.</p>
+    <p id="no-results" class="hidden text-navy/62 text-sm mt-6">No posts in this category yet.</p>
   </section>
 
   <section class="relative bg-navy text-white overflow-hidden">

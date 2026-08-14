@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
 import { SITE_URL } from '../lib/config';
+import { servicesData } from '../lib/servicesData';
 
 interface Props {
   title: string;
@@ -24,6 +25,10 @@ const navItems = [
   { label: 'Insights', href: '/insights' },
   { label: 'Contact', href: '/contact' },
 ];
+
+// Submenu items for "Services" — sourced directly from servicesData so all
+// 5 services always appear here and never fall out of sync with the pages.
+const serviceLinks = servicesData.map(s => ({ label: s.eyebrow, href: `/services/${s.slug}` }));
 
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -75,7 +80,25 @@ const organizationSchema = {
         </a>
         <nav class="hidden lg:flex items-center gap-8" aria-label="Main">
           {navItems.map(item => (
-            <a href={item.href} class="text-sm font-medium text-navy/70 hover:text-navy transition-colors">{item.label}</a>
+            item.label === 'Services' ? (
+              <div class="relative group">
+                <a href={item.href} class="inline-flex items-center gap-1 text-[15px] font-medium text-navy/85 hover:text-navy transition-colors">
+                  {item.label}
+                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true" class="mt-0.5 transition-transform group-hover:rotate-180">
+                    <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+                <div class="invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-150 absolute left-0 top-full pt-3 z-50">
+                  <ul class="min-w-[260px] bg-offwhite border border-navy/10 rounded-sm shadow-lg py-2">
+                    {serviceLinks.map(link => (
+                      <li><a href={link.href} class="block px-4 py-2.5 text-sm font-medium text-navy/80 hover:text-navy hover:bg-navy/5 transition-colors">{link.label}</a></li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ) : (
+              <a href={item.href} class="text-[15px] font-medium text-navy/85 hover:text-navy transition-colors">{item.label}</a>
+            )
           ))}
         </nav>
         <a href="/contact" class="hidden lg:inline-flex items-center bg-navy text-white text-sm font-semibold px-5 py-2.5 rounded-sm hover:bg-navy-light transition-colors">
@@ -88,7 +111,18 @@ const organizationSchema = {
       <nav id="mobile-menu" class="hidden lg:hidden border-t border-navy/10 bg-offwhite" aria-label="Mobile">
         <div class="px-6 py-4 flex flex-col gap-4">
           {navItems.map(item => (
-            <a href={item.href} class="text-sm font-medium text-navy/70">{item.label}</a>
+            item.label === 'Services' ? (
+              <div>
+                <a href={item.href} class="text-[15px] font-medium text-navy/85">{item.label}</a>
+                <div class="mt-2 ml-3 flex flex-col gap-2 border-l border-navy/15 pl-3">
+                  {serviceLinks.map(link => (
+                    <a href={link.href} class="text-sm font-medium text-navy/75 hover:text-navy transition-colors">{link.label}</a>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <a href={item.href} class="text-[15px] font-medium text-navy/85">{item.label}</a>
+            )
           ))}
           <a href="/contact" class="inline-flex items-center justify-center bg-navy text-white text-sm font-semibold px-5 py-2.5 rounded-sm">Let's Talk</a>
         </div>
@@ -100,16 +134,16 @@ const organizationSchema = {
     </main>
 
     <footer class="bg-navy text-white">
-      <div class="max-w-6xl mx-auto px-6 py-14 grid md:grid-cols-4 gap-10">
+      <div class="max-w-6xl mx-auto px-6 py-14 grid md:grid-cols-4 gap-10 text-center md:text-left">
         <div>
-          <div class="flex items-center gap-3 mb-4">
+          <div class="flex items-center justify-center md:justify-start gap-3 mb-4">
             <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <rect x="18" y="18" width="64" height="64" stroke="#00C2CC" stroke-width="8" fill="none"/>
               <path d="M78 14 L30 86 L42 86 L90 14 Z" fill="#F01E2C"/>
             </svg>
             <span class="font-display font-semibold text-lg">Passion Hub</span>
           </div>
-          <p class="text-white/60 text-sm leading-relaxed max-w-xs">Marketing that moves your business forward. Branding &amp; digital marketing across Myanmar, Cambodia, Laos, and Thailand.</p>
+          <p class="text-white/60 text-sm leading-relaxed max-w-xs mx-auto md:mx-0">Marketing that moves your business forward. Branding &amp; digital marketing across Myanmar, Cambodia, Laos, and Thailand.</p>
         </div>
         <div>
           <div class="text-xs uppercase tracking-widest text-teal font-semibold mb-4">Quick Links</div>
@@ -122,11 +156,9 @@ const organizationSchema = {
         <div>
           <div class="text-xs uppercase tracking-widest text-teal font-semibold mb-4">Services</div>
           <ul class="space-y-2 text-sm text-white/80">
-            <li><a href="/services/strategy-development" class="hover:text-teal transition-colors">Strategy Development</a></li>
-            <li><a href="/packages" class="hover:text-teal transition-colors">Social Media Management</a></li>
-            <li><a href="/services/performance-marketing" class="hover:text-teal transition-colors">Performance Marketing</a></li>
-            <li><a href="/services/website-development" class="hover:text-teal transition-colors">Website Development</a></li>
-            <li><a href="/services/seo-ai-search-optimization" class="hover:text-teal transition-colors">SEO &amp; AI Search Optimization</a></li>
+            {serviceLinks.map(link => (
+              <li><a href={link.href} class="hover:text-teal transition-colors">{link.label}</a></li>
+            ))}
           </ul>
         </div>
         <div>
@@ -138,7 +170,7 @@ const organizationSchema = {
         </div>
       </div>
       <div class="border-t border-white/10">
-        <div class="max-w-6xl mx-auto px-6 py-5 text-xs text-white/50 flex flex-col sm:flex-row justify-between gap-2">
+        <div class="max-w-6xl mx-auto px-6 py-5 text-xs text-white/50 flex flex-col sm:flex-row justify-between items-center sm:items-stretch text-center sm:text-left gap-2">
           <span>&copy; {new Date().getFullYear()} Passion Hub. All rights reserved.</span>
           <span>Branding &amp; Digital Marketing</span>
         </div>

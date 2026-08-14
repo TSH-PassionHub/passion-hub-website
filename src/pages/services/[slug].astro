@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import ContactCTA from '../../components/ContactCTA.astro';
 import { servicesData } from '../../lib/servicesData';
-import { FB_MESSENGER_URL } from '../../lib/config';
 
 export async function getStaticPaths() {
   return servicesData.map(service => ({
@@ -61,7 +61,7 @@ const serviceSchema = {
       {service.whatsIncluded.map(item => (
         <div class="border-b border-navy/10 pb-8">
           <h3 class="font-display text-xl font-semibold mb-2">{item.name}</h3>
-          <p class="text-navy/70 leading-relaxed">{item.desc}</p>
+          <p class="text-navy/80 leading-relaxed">{item.desc}</p>
         </div>
       ))}
     </div>
@@ -76,7 +76,7 @@ const serviceSchema = {
           <div class="slash-accent pl-6">
             <div class="text-coral font-display text-sm mb-2">Step {i + 1}</div>
             <h3 class="font-display text-lg font-semibold mb-2">{step.title}</h3>
-            <p class="text-sm text-navy/65 leading-relaxed">{step.desc}</p>
+            <p class="text-sm text-navy/75 leading-relaxed">{step.desc}</p>
           </div>
         ))}
       </div>
@@ -85,7 +85,7 @@ const serviceSchema = {
 
   <section class="max-w-4xl mx-auto px-6 py-16 md:py-20">
     <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">Who This Is For</span>
-    <p class="mt-4 text-lg text-navy/75 leading-relaxed max-w-2xl">{service.whoFor}</p>
+    <p class="mt-4 text-lg text-navy/82 leading-relaxed max-w-2xl">{service.whoFor}</p>
   </section>
 
   <section class="bg-navy text-white">
@@ -103,17 +103,10 @@ const serviceSchema = {
     </div>
   </section>
 
-  <section class="relative bg-cream/50 overflow-hidden">
-    <div class="max-w-4xl mx-auto px-6 py-20 md:py-24 text-center">
-      <h2 class="font-display text-3xl md:text-4xl leading-tight">{service.ctaHeading}</h2>
-      <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-        <a href={service.ctaHref} class="inline-flex items-center justify-center bg-navy text-white text-sm font-semibold px-8 py-4 rounded-sm hover:bg-navy-light transition-colors">
-          {service.ctaLabel}
-        </a>
-        <a href={FB_MESSENGER_URL} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center border border-navy/20 text-navy text-sm font-semibold px-8 py-4 rounded-sm hover:bg-navy/5 transition-colors">
-          Chat on Messenger
-        </a>
-      </div>
-    </div>
-  </section>
+  <ContactCTA
+    id="service-cta"
+    heading={service.ctaHeading}
+    sourceLabel={`${service.eyebrow} Service Page`}
+    maxWidth="max-w-4xl"
+  />
 </Layout>

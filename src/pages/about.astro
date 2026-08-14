@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import WorkCarousel from '../components/WorkCarousel.astro';
+import ContactCTA from '../components/ContactCTA.astro';
 import { whyPassionHub, portfolioItems, testimonials, pageMeta, SECTION_VISIBILITY } from '../lib/config';
 
 const industries = ['F&B', 'Healthcare', 'Hygiene', 'Beauty', 'Hospitality', 'Social Business Units', 'Human Resources', 'Finance', 'B2B'];
@@ -26,15 +27,15 @@ const industries = ['F&B', 'Healthcare', 'Hygiene', 'Beauty', 'Hospitality', 'So
       <h2 class="font-display text-3xl md:text-4xl mt-4 leading-tight">A decade of building brands that grow.</h2>
     </div>
     <div class="md:col-span-3">
-      <p class="text-navy/75 leading-relaxed text-lg">
+      <p class="text-navy/82 leading-relaxed text-lg">
         Passion Hub is a Myanmar-based branding and digital marketing agency led by a team with combined expertise in building and growing brands across F&amp;B, Healthcare, Beauty, Hospitality, Recruitment, B2B, and Social Business sectors.
       </p>
-      <p class="mt-5 text-navy/75 leading-relaxed text-lg">
+      <p class="mt-5 text-navy/82 leading-relaxed text-lg">
         With hands-on experience in both agency and in-house settings — and regional exposure across Cambodia, Laos, and Thailand — we bring proven, practical marketing know-how to every project.
       </p>
       <div class="mt-8 flex flex-wrap gap-2">
         {industries.map(ind => (
-          <span class="text-xs font-medium border border-navy/15 rounded-full px-3.5 py-1.5 text-navy/70">{ind}</span>
+          <span class="text-xs font-medium border border-navy/15 rounded-full px-3.5 py-1.5 text-navy/78">{ind}</span>
         ))}
       </div>
     </div>
@@ -72,7 +73,7 @@ const industries = ['F&B', 'Healthcare', 'Hygiene', 'Beauty', 'Hospitality', 'So
         {whyPassionHub.map(w => (
           <div class="bg-offwhite p-8">
             <h3 class="font-display text-xl font-semibold mb-2">{w.title}</h3>
-            <p class="text-sm text-navy/65 leading-relaxed">{w.desc}</p>
+            <p class="text-sm text-navy/75 leading-relaxed">{w.desc}</p>
           </div>
         ))}
       </div>
@@ -87,9 +88,9 @@ const industries = ['F&B', 'Healthcare', 'Hygiene', 'Beauty', 'Hospitality', 'So
       <div class="grid md:grid-cols-3 gap-6">
         {testimonials.map(t => (
           <div class="p-8 border border-navy/10 bg-offwhite">
-            <p class="text-navy/75 leading-relaxed italic">&ldquo;{t.quote}&rdquo;</p>
+            <p class="text-navy/82 leading-relaxed italic">&ldquo;{t.quote}&rdquo;</p>
             <div class="mt-6 text-sm font-semibold">{t.clientName}</div>
-            <div class="text-xs text-navy/50">{t.position}, {t.company}</div>
+            <div class="text-xs text-navy/62">{t.position}, {t.company}</div>
           </div>
         ))}
       </div>
@@ -105,17 +106,10 @@ const industries = ['F&B', 'Healthcare', 'Hygiene', 'Beauty', 'Hospitality', 'So
     </section>
   )}
 
-  <!-- CTA -->
-  <section class="relative bg-navy text-white overflow-hidden">
-    <div class="max-w-6xl mx-auto px-6 py-24 md:py-32 text-center">
-      <h2 class="font-display text-4xl md:text-5xl leading-tight max-w-2xl mx-auto">
-        Let's <span class="accent-slant text-teal">work together.</span>
-      </h2>
-      <div class="mt-10">
-        <a href="/contact" class="inline-flex items-center justify-center bg-coral text-white text-sm font-semibold px-8 py-4 rounded-sm hover:bg-coral/90 transition-colors">
-          Let's Talk
-        </a>
-      </div>
-    </div>
-  </section>
+  <ContactCTA
+    id="about-cta"
+    heading="Let's work together."
+    subtext="Reach out and tell us a bit about your brand — we'll take it from there."
+    sourceLabel="About Page"
+  />
 </Layout>

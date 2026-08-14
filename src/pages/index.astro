@@ -1,9 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ContactCTA from '../components/ContactCTA.astro';
 import { getCollection } from 'astro:content';
 import {
   SHOW_PRICING,
-  FB_MESSENGER_URL,
   packageTiers,
   serviceCategories,
   whyPassionHub,
@@ -12,9 +12,9 @@ import {
 } from '../lib/config';
 
 const stats = [
-  { value: '10+', label: 'Years of Industry Experience' },
-  { value: '4', label: 'Countries — Regional Experience' },
-  { value: '100%', label: 'Client-First Process' },
+  { target: 10, suffix: '+', label: 'Years of Industry Experience' },
+  { target: 4, suffix: '', label: 'Countries — Regional Experience' },
+  { target: 100, suffix: '%', label: 'Client-First Process' },
 ];
 
 const process = [
@@ -61,9 +61,9 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day:
   <section class="max-w-6xl mx-auto px-6 -mt-2 md:mt-0 py-16 md:py-24">
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-6">
       {stats.map((s, i) => (
-        <div class={i > 0 ? 'sm:pl-6 sm:border-l border-navy/10' : ''}>
-          <div class="font-display text-4xl md:text-5xl font-semibold text-navy">{s.value}</div>
-          <div class="mt-2 text-sm text-navy/60 leading-snug">{s.label}</div>
+        <div class={`flex flex-col items-center text-center ${i > 0 ? 'sm:pl-6 sm:border-l border-navy/10' : ''}`}>
+          <div class="stat-number font-display text-4xl md:text-5xl font-semibold text-navy" data-target={s.target} data-suffix={s.suffix}>0{s.suffix}</div>
+          <div class="mt-2 text-sm text-navy/78 leading-snug">{s.label}</div>
         </div>
       ))}
     </div>
@@ -74,7 +74,7 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day:
       <div class="md:col-span-3">
         <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">A Decade of Building Brands That Grow</span>
         <h2 class="font-display text-3xl md:text-4xl mt-4 leading-tight">A decade of building brands that grow.</h2>
-        <p class="mt-5 text-navy/75 leading-relaxed text-lg">
+        <p class="mt-5 text-navy/82 leading-relaxed text-lg">
           Passion Hub is led by a team with deep, combined expertise across F&amp;B, Healthcare, Beauty, Hospitality, Recruitment, B2B, and Social Business Units. Based in Myanmar, we bring hands-on experience and a proven track record of helping brands grow — with regional expertise extending across Cambodia, Laos, and Thailand.
         </p>
         <a href="/about" class="inline-flex items-center gap-1.5 mt-6 text-sm font-semibold text-navy hover:text-coral transition-colors">
@@ -98,7 +98,7 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day:
       {serviceCategories.map(s => (
         <a href={s.external || `/services/${s.slug}`} class="reveal bg-offwhite p-8 hover:bg-white transition-colors">
           <h3 class="font-display text-xl font-semibold mb-2">{s.name}</h3>
-          <p class="text-sm text-navy/65 leading-relaxed">{s.desc}</p>
+          <p class="text-sm text-navy/75 leading-relaxed">{s.desc}</p>
         </a>
       ))}
       <a href="/services" class="reveal bg-navy p-8 hover:bg-navy-light transition-colors flex flex-col justify-center items-start">
@@ -137,10 +137,10 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day:
               <h3 class="font-display text-2xl font-semibold">{tier.name}</h3>
               <span class={`font-display accent-slant text-sm ${tier.featured ? 'text-teal' : 'text-coral'}`}>"{tier.nickname}"</span>
             </div>
-            <p class={`mt-2 text-sm ${tier.featured ? 'text-white/65' : 'text-navy/60'}`}>{tier.tagline}</p>
+            <p class={`mt-2 text-sm ${tier.featured ? 'text-white/65' : 'text-navy/70'}`}>{tier.tagline}</p>
             <div class="mt-5">
               {SHOW_PRICING ? (
-                <span class="font-display text-2xl font-semibold">{tier.price}<span class={tier.featured ? 'text-white/60 text-sm' : 'text-navy/50 text-sm'}>{tier.period}</span></span>
+                <span class="font-display text-2xl font-semibold">{tier.price}<span class={tier.featured ? 'text-white/60 text-sm' : 'text-navy/60 text-sm'}>{tier.period}</span></span>
               ) : (
                 <span class={`inline-block text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full ${tier.featured ? 'bg-teal/20 text-teal' : 'bg-coral/10 text-coral'}`}>Custom Quote</span>
               )}
@@ -177,9 +177,9 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day:
       <div class="grid md:grid-cols-3 gap-6">
         {testimonials.map(t => (
           <div class="p-8 border border-navy/10 bg-cream/50">
-            <p class="text-navy/75 leading-relaxed italic">&ldquo;{t.quote}&rdquo;</p>
+            <p class="text-navy/82 leading-relaxed italic">&ldquo;{t.quote}&rdquo;</p>
             <div class="mt-6 text-sm font-semibold">{t.clientName}</div>
-            <div class="text-xs text-navy/50">{t.position}, {t.company}</div>
+            <div class="text-xs text-navy/62">{t.position}, {t.company}</div>
           </div>
         ))}
       </div>
@@ -197,7 +197,7 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day:
               <img src={post.data.featuredImage || '/images/general/planning-desk.webp'} alt={post.data.featuredImageAlt || post.data.title} width="800" height="450" class="w-full h-full object-cover" loading="lazy" />
             </div>
             <div class="p-8 flex flex-col flex-1">
-              <div class="flex items-center gap-3 text-xs text-navy/50 mb-4">
+              <div class="flex items-center gap-3 text-xs text-navy/60 mb-4">
                 <span class="uppercase tracking-widest text-coral font-semibold">{post.data.category}</span>
                 <span>&middot;</span>
                 <time datetime={post.data.pubDate.toISOString()}>{dateFmt(post.data.pubDate)}</time>
@@ -211,29 +211,71 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day:
         ))}
       </div>
     ) : (
-      <p class="text-navy/60">No posts yet — check back soon.</p>
+      <p class="text-navy/70">No posts yet — check back soon.</p>
     )}
     <a href="/insights" class="inline-flex items-center gap-1.5 mt-8 text-sm font-semibold text-navy hover:text-coral transition-colors">
       View All Insights <span aria-hidden="true">&rarr;</span>
     </a>
   </section>
 
-  <section id="contact" class="relative bg-navy text-white overflow-hidden">
-    <div class="max-w-6xl mx-auto px-6 py-24 md:py-32 text-center">
-      <h2 class="font-display text-4xl md:text-6xl leading-tight max-w-3xl mx-auto">
-        Ready to move your marketing <span class="accent-slant text-teal">forward?</span>
-      </h2>
-      <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-        <a href="/contact" class="inline-flex items-center justify-center bg-coral text-white text-sm font-semibold px-8 py-4 rounded-sm hover:bg-coral/90 transition-colors">
-          Let's Talk
-        </a>
-        <a href={FB_MESSENGER_URL} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center border border-white/30 text-white text-sm font-semibold px-8 py-4 rounded-sm hover:bg-white/10 transition-colors">
-          Chat on Messenger
-        </a>
-        <a href="tel:+959798822267" class="inline-flex items-center justify-center border border-white/30 text-white text-sm font-semibold px-8 py-4 rounded-sm hover:bg-white/10 transition-colors">
-          +959 798 822 267
-        </a>
-      </div>
-    </div>
-  </section>
+  <ContactCTA
+    id="home-cta"
+    heading="Ready to move your marketing forward?"
+    subtext="Tell us a bit about your brand and we'll get back to you within one business day."
+    sourceLabel="Homepage"
+  />
+
+  <script>
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const statEls = document.querySelectorAll('.stat-number');
+
+    function animateCount(el: Element) {
+      const target = Number(el.getAttribute('data-target') || '0');
+      const suffix = el.getAttribute('data-suffix') || '';
+
+      if (prefersReducedMotion) {
+        el.textContent = `${target}${suffix}`;
+        return;
+      }
+
+      const duration = 1200;
+      const start = performance.now();
+
+      function tick(now: number) {
+        const progress = Math.min((now - start) / duration, 1);
+        // easeOutQuad — quick start, gentle settle
+        const eased = 1 - (1 - progress) * (1 - progress);
+        const current = Math.round(eased * target);
+        el.textContent = `${current}${suffix}`;
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          el.textContent = `${target}${suffix}`;
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    if ('IntersectionObserver' in window && statEls.length) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              animateCount(entry.target);
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.4 }
+      );
+      statEls.forEach((el) => observer.observe(el));
+    } else {
+      // Fallback: no IntersectionObserver support — just show final values.
+      statEls.forEach((el) => {
+        const target = el.getAttribute('data-target') || '0';
+        const suffix = el.getAttribute('data-suffix') || '';
+        el.textContent = `${target}${suffix}`;
+      });
+    }
+  </script>
 </Layout>

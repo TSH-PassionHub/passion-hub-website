@@ -13,7 +13,7 @@ const { items, groupId } = Astro.props;
     {items.map((item, i) => (
       <button
         type="button"
-        class="pill-btn text-sm font-medium border border-navy/15 rounded-full px-4 py-2 text-navy/70 hover:border-navy/40 transition-colors"
+        class="pill-btn text-sm font-medium border border-navy/15 rounded-full px-4 py-2 text-navy/78 hover:border-navy/40 transition-colors"
         data-index={i}
         aria-expanded="false"
       >
@@ -21,7 +21,7 @@ const { items, groupId } = Astro.props;
       </button>
     ))}
   </div>
-  <div class="pill-desc mt-4 text-sm text-navy/70 leading-relaxed hidden border-l-2 border-teal pl-4 py-1"></div>
+  <div class="pill-desc mt-4 text-sm text-navy/80 leading-relaxed hidden border-l-2 border-teal pl-4 py-1"></div>
 </div>
 
 <script define:vars={{ items, groupId }}>
