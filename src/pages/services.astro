@@ -1,0 +1,75 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ExpandablePillList from '../components/ExpandablePillList.astro';
+import { serviceCategories, projectBasedServices, addOnServices, FB_MESSENGER_URL, pageMeta } from '../lib/config';
+---
+
+<Layout title={pageMeta.services.title} description={pageMeta.services.description}>
+  <section class="bg-navy text-white">
+    <div class="max-w-6xl mx-auto px-6 pt-24 pb-20 md:pt-28 md:pb-24">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="h-px w-10 bg-coral"></span>
+        <span class="text-xs uppercase tracking-[0.2em] text-teal font-semibold">Digital Marketing Services</span>
+      </div>
+      <h1 class="font-display text-4xl md:text-6xl leading-tight max-w-2xl">
+        Everything your brand needs to <span class="accent-slant text-teal">move forward.</span>
+      </h1>
+      <p class="mt-6 text-white/65 max-w-lg leading-relaxed">
+        From strategy through execution, we cover the full range of what a growing brand needs — pick a category, or let us scope a custom mix.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+    <div class="grid sm:grid-cols-2 gap-6">
+      {serviceCategories.map((cat, i) => (
+        <a href={cat.external || `/services/${cat.slug}`} class="reveal group border border-navy/10 bg-offwhite p-8 hover:border-navy/30 hover:bg-white transition-colors flex flex-col">
+          <span class="font-display text-sm text-coral mb-3">0{i + 1}</span>
+          <h2 class="font-display text-2xl font-semibold mb-3">{cat.name}</h2>
+          <p class="text-sm text-navy/65 leading-relaxed mb-5">{cat.desc}</p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            {cat.items.map(item => (
+              <span class="text-xs font-medium border border-navy/15 rounded-full px-3 py-1.5 text-navy/60">{item}</span>
+            ))}
+          </div>
+          <span class="mt-auto text-sm font-semibold text-navy inline-flex items-center gap-1.5 group-hover:text-coral transition-colors">
+            {cat.external ? 'View packages' : 'Learn more'} <span aria-hidden="true">&rarr;</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-cream/50">
+    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">Project-Based Services</span>
+      <h2 class="font-display text-3xl md:text-4xl mt-4 mb-4 max-w-xl">One-off projects, scoped to you.</h2>
+      <p class="text-sm text-navy/50 mb-8">Tap a service to see what's included.</p>
+      <div class="mb-16">
+        <ExpandablePillList items={projectBasedServices} groupId="services-project" />
+      </div>
+
+      <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">Add-On Services</span>
+      <h2 class="font-display text-3xl md:text-4xl mt-4 mb-4 max-w-xl">Extend any package as you grow.</h2>
+      <p class="text-sm text-navy/50 mb-8">Tap a service to see what's included.</p>
+      <ExpandablePillList items={addOnServices} groupId="services-addon" />
+    </div>
+  </section>
+
+  <section class="relative bg-navy text-white overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6 py-24 md:py-32 text-center">
+      <h2 class="font-display text-4xl md:text-5xl leading-tight max-w-2xl mx-auto">
+        Need a <span class="accent-slant text-teal">custom solution?</span>
+      </h2>
+      <p class="mt-6 text-white/65 max-w-lg mx-auto">Most of our best work starts as a conversation, not a fixed package.</p>
+      <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+        <a href="/contact" class="inline-flex items-center justify-center bg-coral text-white text-sm font-semibold px-8 py-4 rounded-sm hover:bg-coral/90 transition-colors">
+          Let's Talk
+        </a>
+        <a href={FB_MESSENGER_URL} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center border border-white/30 text-white text-sm font-semibold px-8 py-4 rounded-sm hover:bg-white/10 transition-colors">
+          Chat on Messenger
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

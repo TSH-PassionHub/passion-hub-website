@@ -1,0 +1,239 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import {
+  SHOW_PRICING,
+  FB_MESSENGER_URL,
+  packageTiers,
+  serviceCategories,
+  whyPassionHub,
+  testimonials,
+  pageMeta,
+} from '../lib/config';
+
+const stats = [
+  { value: '10+', label: 'Years of Industry Experience' },
+  { value: '4', label: 'Countries — Regional Experience' },
+  { value: '100%', label: 'Client-First Process' },
+];
+
+const process = [
+  { title: 'Brand Briefing', desc: 'We start by understanding your brand, audience, and goals — before recommending anything.' },
+  { title: 'Planning & Execution', desc: 'Strategy becomes a content and campaign plan, executed on schedule.' },
+  { title: 'Review & Improvement', desc: 'Every campaign is measured, reviewed, and refined for stronger performance next time.' },
+];
+
+const latestInsights = (await getCollection('insights', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+---
+
+<Layout title={pageMeta.home.title} description={pageMeta.home.description}>
+  <section class="relative bg-navy text-white overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.07]" style="background-image: repeating-linear-gradient(115deg, transparent, transparent 40px, white 41px, white 42px);"></div>
+    <div class="max-w-6xl mx-auto px-6 pt-24 pb-28 md:pt-32 md:pb-36 relative">
+      <div class="max-w-3xl">
+        <div class="flex items-center gap-3 mb-8">
+          <span class="h-px w-10 bg-coral"></span>
+          <span class="text-xs uppercase tracking-[0.2em] text-teal font-semibold">Branding &amp; Digital Marketing</span>
+        </div>
+        <h1 class="font-display text-5xl md:text-7xl leading-[1.05] font-medium">
+          Marketing that moves you <span class="accent-slant text-teal">further</span>, faster.
+        </h1>
+        <p class="mt-8 text-lg text-white/70 max-w-xl leading-relaxed">
+          A decade of expertise in branding and digital marketing — helping Myanmar businesses build brands that grow, backed by a team with hands-on regional experience across Cambodia, Laos, and Thailand.
+        </p>
+        <div class="mt-10 flex flex-wrap gap-4">
+          <a href="/services" class="inline-flex items-center bg-coral text-white text-sm font-semibold px-7 py-3.5 rounded-sm hover:bg-coral/90 transition-colors">
+            Explore Our Services
+          </a>
+          <a href="/contact" class="inline-flex items-center border border-white/30 text-white text-sm font-semibold px-7 py-3.5 rounded-sm hover:bg-white/10 transition-colors">
+            Let's Talk
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-0 left-0 w-full h-16 md:h-24 bg-offwhite" style="clip-path: polygon(0 100%, 100% 40%, 100% 100%);"></div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-6 -mt-2 md:mt-0 py-16 md:py-24">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-6">
+      {stats.map((s, i) => (
+        <div class={i > 0 ? 'sm:pl-6 sm:border-l border-navy/10' : ''}>
+          <div class="font-display text-4xl md:text-5xl font-semibold text-navy">{s.value}</div>
+          <div class="mt-2 text-sm text-navy/60 leading-snug">{s.label}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-cream/50">
+    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-5 gap-12 items-center">
+      <div class="md:col-span-3">
+        <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">A Decade of Building Brands That Grow</span>
+        <h2 class="font-display text-3xl md:text-4xl mt-4 leading-tight">A decade of building brands that grow.</h2>
+        <p class="mt-5 text-navy/75 leading-relaxed text-lg">
+          Passion Hub is led by a team with deep, combined expertise across F&amp;B, Healthcare, Beauty, Hospitality, Recruitment, B2B, and Social Business Units. Based in Myanmar, we bring hands-on experience and a proven track record of helping brands grow — with regional expertise extending across Cambodia, Laos, and Thailand.
+        </p>
+        <a href="/about" class="inline-flex items-center gap-1.5 mt-6 text-sm font-semibold text-navy hover:text-coral transition-colors">
+          More About Us <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+      <div class="md:col-span-2 aspect-[4/3] overflow-hidden border border-navy/10">
+        <img src="/images/general/team-collaboration.webp" alt="Passion Hub team collaborating in a strategy session" width="1000" height="1000" class="w-full h-full object-cover" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+    <div class="flex items-end justify-between flex-wrap gap-4 mb-14">
+      <div>
+        <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">What We Do</span>
+        <h2 class="font-display text-3xl md:text-4xl mt-4">Everything your brand needs to move.</h2>
+      </div>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-navy/10 border border-navy/10">
+      {serviceCategories.map(s => (
+        <a href={s.external || `/services/${s.slug}`} class="reveal bg-offwhite p-8 hover:bg-white transition-colors">
+          <h3 class="font-display text-xl font-semibold mb-2">{s.name}</h3>
+          <p class="text-sm text-navy/65 leading-relaxed">{s.desc}</p>
+        </a>
+      ))}
+      <a href="/services" class="reveal bg-navy p-8 hover:bg-navy-light transition-colors flex flex-col justify-center items-start">
+        <span class="text-teal text-sm font-semibold uppercase tracking-wide mb-2">See everything</span>
+        <span class="font-display text-xl font-semibold text-white inline-flex items-center gap-1.5">
+          Explore Our Services <span aria-hidden="true">&rarr;</span>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <section class="bg-navy text-white">
+    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <span class="text-xs uppercase tracking-[0.2em] text-teal font-semibold">Why Passion Hub</span>
+      <h2 class="font-display text-3xl md:text-4xl mt-4 mb-14 max-w-xl">Four reasons brands stay with us.</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        {whyPassionHub.map(w => (
+          <div class="slash-accent pl-6">
+            <h3 class="font-display text-lg font-semibold mb-2">{w.title}</h3>
+            <p class="text-white/65 text-sm leading-relaxed">{w.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="bg-cream/50">
+    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">Packages</span>
+      <h2 class="font-display text-3xl md:text-4xl mt-4 mb-14 max-w-xl">Social media management, three ways to scale.</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        {packageTiers.map(tier => (
+          <div class={`p-8 border ${tier.featured ? 'bg-navy text-white border-navy' : 'bg-offwhite border-navy/10'}`}>
+            {tier.featured && <span class="text-xs uppercase tracking-widest text-teal font-semibold">Most popular</span>}
+            <div class="flex items-baseline gap-2 mt-2">
+              <h3 class="font-display text-2xl font-semibold">{tier.name}</h3>
+              <span class={`font-display accent-slant text-sm ${tier.featured ? 'text-teal' : 'text-coral'}`}>"{tier.nickname}"</span>
+            </div>
+            <p class={`mt-2 text-sm ${tier.featured ? 'text-white/65' : 'text-navy/60'}`}>{tier.tagline}</p>
+            <div class="mt-5">
+              {SHOW_PRICING ? (
+                <span class="font-display text-2xl font-semibold">{tier.price}<span class={tier.featured ? 'text-white/60 text-sm' : 'text-navy/50 text-sm'}>{tier.period}</span></span>
+              ) : (
+                <span class={`inline-block text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full ${tier.featured ? 'bg-teal/20 text-teal' : 'bg-coral/10 text-coral'}`}>Custom Quote</span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+      <a href="/packages" class="inline-flex items-center gap-1.5 mt-8 text-sm font-semibold text-navy hover:text-coral transition-colors">
+        See all Packages &amp; Add-Ons <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="bg-navy text-white">
+    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <span class="text-xs uppercase tracking-[0.2em] text-teal font-semibold">How We Work</span>
+      <h2 class="font-display text-3xl md:text-4xl mt-4 max-w-xl">A meticulous, insight-driven approach.</h2>
+      <div class="mt-14 grid md:grid-cols-3 gap-10">
+        {process.map((p, i) => (
+          <div class="slash-accent pl-6">
+            <div class="text-teal font-display text-sm mb-3">0{i + 1}</div>
+            <h3 class="font-display text-xl font-semibold mb-3">{p.title}</h3>
+            <p class="text-white/65 text-sm leading-relaxed">{p.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {testimonials.length > 0 && (
+    <section class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">What Clients Say</span>
+      <h2 class="font-display text-3xl md:text-4xl mt-4 mb-14">Trusted by growing brands.</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        {testimonials.map(t => (
+          <div class="p-8 border border-navy/10 bg-cream/50">
+            <p class="text-navy/75 leading-relaxed italic">&ldquo;{t.quote}&rdquo;</p>
+            <div class="mt-6 text-sm font-semibold">{t.clientName}</div>
+            <div class="text-xs text-navy/50">{t.position}, {t.company}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+    <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">Insights</span>
+    <h2 class="font-display text-3xl md:text-4xl mt-4 mb-14">Latest thinking from the team.</h2>
+    {latestInsights.length > 0 ? (
+      <div class="grid md:grid-cols-3 gap-px bg-navy/10 border border-navy/10">
+        {latestInsights.map(post => (
+          <a href={`/insights/${post.id}/`} class="bg-offwhite hover:bg-white transition-colors flex flex-col">
+            <div class="aspect-[16/9] overflow-hidden">
+              <img src={post.data.featuredImage || '/images/general/planning-desk.webp'} alt={post.data.featuredImageAlt || post.data.title} width="800" height="450" class="w-full h-full object-cover" loading="lazy" />
+            </div>
+            <div class="p-8 flex flex-col flex-1">
+              <div class="flex items-center gap-3 text-xs text-navy/50 mb-4">
+                <span class="uppercase tracking-widest text-coral font-semibold">{post.data.category}</span>
+                <span>&middot;</span>
+                <time datetime={post.data.pubDate.toISOString()}>{dateFmt(post.data.pubDate)}</time>
+              </div>
+              <h3 class="font-display text-lg font-semibold mb-3 leading-snug">{post.data.title}</h3>
+              <span class="mt-auto text-sm font-semibold text-navy inline-flex items-center gap-1.5">
+                Read more <span aria-hidden="true">&rarr;</span>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <p class="text-navy/60">No posts yet — check back soon.</p>
+    )}
+    <a href="/insights" class="inline-flex items-center gap-1.5 mt-8 text-sm font-semibold text-navy hover:text-coral transition-colors">
+      View All Insights <span aria-hidden="true">&rarr;</span>
+    </a>
+  </section>
+
+  <section id="contact" class="relative bg-navy text-white overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6 py-24 md:py-32 text-center">
+      <h2 class="font-display text-4xl md:text-6xl leading-tight max-w-3xl mx-auto">
+        Ready to move your marketing <span class="accent-slant text-teal">forward?</span>
+      </h2>
+      <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+        <a href="/contact" class="inline-flex items-center justify-center bg-coral text-white text-sm font-semibold px-8 py-4 rounded-sm hover:bg-coral/90 transition-colors">
+          Let's Talk
+        </a>
+        <a href={FB_MESSENGER_URL} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center border border-white/30 text-white text-sm font-semibold px-8 py-4 rounded-sm hover:bg-white/10 transition-colors">
+          Chat on Messenger
+        </a>
+        <a href="tel:+959798822267" class="inline-flex items-center justify-center border border-white/30 text-white text-sm font-semibold px-8 py-4 rounded-sm hover:bg-white/10 transition-colors">
+          +959 798 822 267
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

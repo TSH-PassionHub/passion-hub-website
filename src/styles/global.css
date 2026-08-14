@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Droid+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #032A53;
+  --color-navy-light: #0B3D6E;
+  --color-teal: #00C2CC;
+  --color-teal-dark: #009AA3;
+  --color-coral: #F01E2C;
+  --color-cream: #EDE8DC;
+  --color-offwhite: #F8FAFB;
+
+  --font-display: 'Droid Serif', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-offwhite);
+  color: var(--color-navy);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Signature diagonal slash motif -- echoes the logo mark */
+.slash-divider {
+  position: relative;
+  overflow: hidden;
+}
+.slash-divider::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: inherit;
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
+
+.slash-accent {
+  position: relative;
+}
+.slash-accent::after {
+  content: '';
+  position: absolute;
+  width: 3px;
+  height: 100%;
+  background: var(--color-coral);
+  transform: skewX(-12deg);
+  left: -12px;
+  top: 0;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Synthetic slant for accent words in headlines — deliberately NOT font-style: italic.
+   Fraunces' true italic face has a distinctive swashy lowercase "f" that reads oddly
+   at display sizes. font-style: oblique slants the upright glyphs instead, keeping
+   Fraunces' character without loading its italic drawing. */
+.accent-slant {
+  font-style: oblique 10deg;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-coral);
+  outline-offset: 3px;
+}
+
+/* Scroll reveal — paired with the IntersectionObserver script in Layout.astro.
+   Visible by default (progressive enhancement): JS adds .pre-reveal only if it
+   successfully initializes, so content never stays hidden if JS fails to run. */
+.pre-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.pre-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Card hover lift — pure CSS, ~zero performance cost */
+.reveal:hover {
+  transform: translateY(-4px);
+  transition: opacity 0.4s ease, transform 0.2s ease;
+}
+
+/* Button tap feedback */
+a:active, button:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pre-reveal {
+    opacity: 1;
+    transform: none;
+  }
+  a:active, button:active {
+    transform: none;
+  }
+}

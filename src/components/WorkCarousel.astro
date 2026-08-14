@@ -1,0 +1,54 @@
+---
+import type { PortfolioItem } from '../lib/config';
+
+interface Props {
+  items: PortfolioItem[];
+}
+const { items } = Astro.props;
+---
+
+<div class="relative">
+  <div id="carousel-track" class="flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 -mx-6 px-6 md:mx-0 md:px-0" style="scrollbar-width: none;">
+    {items.map(item => (
+      <div class="group snap-start shrink-0 w-[78%] sm:w-[45%] lg:w-[30%] aspect-[4/5] overflow-hidden border border-navy/10 relative bg-cream/60">
+        <img src={item.image} alt={item.alt} width="1000" height="1000" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+        <div class="absolute inset-0 bg-navy/0 group-hover:bg-navy/70 transition-colors duration-300 flex items-end p-4 opacity-0 group-hover:opacity-100">
+          <div class="text-white">
+            <div class="text-xs uppercase tracking-widest text-teal font-semibold">{item.category}</div>
+            <div class="text-sm font-semibold mt-1">{item.client}</div>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="flex justify-end gap-3 mt-4">
+    <button type="button" id="carousel-prev" aria-label="Previous work" class="w-11 h-11 rounded-full border border-navy/20 flex items-center justify-center hover:bg-navy hover:text-white hover:border-navy transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-coral">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button type="button" id="carousel-next" aria-label="Next work" class="w-11 h-11 rounded-full border border-navy/20 flex items-center justify-center hover:bg-navy hover:text-white hover:border-navy transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-coral">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  #carousel-track::-webkit-scrollbar { display: none; }
+</style>
+
+<script>
+  const track = document.getElementById('carousel-track');
+  const prev = document.getElementById('carousel-prev');
+  const next = document.getElementById('carousel-next');
+
+  function scrollByCard(direction: number) {
+    if (!track) return;
+    const card = track.querySelector('div');
+    const gap = 20;
+    const cardWidth = card ? card.getBoundingClientRect().width + gap : 300;
+    track.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+  }
+
+  prev?.addEventListener('click', () => scrollByCard(-1));
+  next?.addEventListener('click', () => scrollByCard(1));
+</script>

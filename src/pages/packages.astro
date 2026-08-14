@@ -1,0 +1,156 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ExpandablePillList from '../components/ExpandablePillList.astro';
+import {
+  SHOW_PRICING,
+  FB_MESSENGER_URL,
+  packageTiers,
+  comparisonRows,
+  feeDropCallout,
+  projectBasedServices,
+  addOnServices,
+  pageMeta,
+} from '../lib/config';
+---
+
+<Layout title={pageMeta.packages.title} description={pageMeta.packages.description}>
+  <section class="bg-navy text-white">
+    <div class="max-w-6xl mx-auto px-6 pt-24 pb-20 md:pt-28 md:pb-24">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="h-px w-10 bg-coral"></span>
+        <span class="text-xs uppercase tracking-[0.2em] text-teal font-semibold">Packages</span>
+      </div>
+      <h1 class="font-display text-4xl md:text-6xl leading-tight max-w-2xl">
+        Flexible marketing <span class="accent-slant text-teal">packages</span> built to fit.
+      </h1>
+      <p class="mt-6 text-white/65 max-w-lg leading-relaxed">
+        From ongoing social media management to one-off projects, every package is scoped around what your brand actually needs — not a one-size-fits-all bundle.
+      </p>
+    </div>
+  </section>
+
+  <!-- SOCIAL MEDIA PACKAGES -->
+  <section class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+    <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">Social Media Packages</span>
+    <h2 class="font-display text-3xl md:text-4xl mt-4 mb-4 max-w-xl">Ongoing management, three ways to scale.</h2>
+
+    <div class="grid md:grid-cols-3 gap-6 mt-10">
+      {packageTiers.map(tier => (
+        <div class={`reveal p-8 border flex flex-col ${tier.featured ? 'bg-navy text-white border-navy' : 'bg-offwhite border-navy/10'}`}>
+          {tier.featured && <span class="text-xs uppercase tracking-widest text-teal font-semibold mb-2">Most popular</span>}
+          <div class="flex items-baseline gap-2">
+            <h3 class="font-display text-2xl font-semibold">{tier.name}</h3>
+            <span class={`font-display accent-slant text-lg ${tier.featured ? 'text-teal' : 'text-coral'}`}>"{tier.nickname}"</span>
+          </div>
+          <p class={`mt-3 text-xs font-semibold uppercase tracking-wide ${tier.featured ? 'text-white/50' : 'text-navy/40'}`}>{tier.bestFor}</p>
+          <p class={`mt-3 text-sm ${tier.featured ? 'text-white/65' : 'text-navy/60'}`}>
+            {tier.tagline}
+            {tier.feeCallout && <strong> — {tier.feeCallout}.</strong>}
+          </p>
+
+          <div class="mt-6 mb-2">
+            {SHOW_PRICING ? (
+              <>
+                <span class="font-display text-3xl font-semibold">{tier.price}</span>
+                <span class={tier.featured ? 'text-white/60 text-sm' : 'text-navy/50 text-sm'}>{tier.period}</span>
+              </>
+            ) : (
+              <span class={`inline-block text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full ${tier.featured ? 'bg-teal/20 text-teal' : 'bg-coral/10 text-coral'}`}>
+                Custom Quote
+              </span>
+            )}
+          </div>
+          <div class={`text-xs mb-6 ${tier.featured ? 'text-white/50' : 'text-navy/45'}`}>{tier.postCount}</div>
+
+          <ul class="space-y-3 text-sm flex-1">
+            {tier.deliverables.map(d => (
+              <li class={`flex gap-2 ${tier.featured ? 'text-white/80' : 'text-navy/70'}`}>
+                <span class="text-teal mt-0.5">&#10003;</span>
+                <span>{d}</span>
+              </li>
+            ))}
+          </ul>
+
+          <a
+            href={SHOW_PRICING ? '/contact' : FB_MESSENGER_URL}
+            target={SHOW_PRICING ? undefined : '_blank'}
+            rel={SHOW_PRICING ? undefined : 'noopener noreferrer'}
+            class={`mt-8 inline-flex items-center justify-center text-sm font-semibold px-6 py-3 rounded-sm transition-colors ${tier.featured ? 'bg-coral text-white hover:bg-coral/90' : 'bg-navy text-white hover:bg-navy-light'}`}
+          >
+            {SHOW_PRICING ? 'Get Started' : 'Get a Quote'}
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-8 p-6 border-l-4 border-teal bg-teal/5 flex items-start gap-4">
+      <span class="text-teal text-2xl leading-none">&#8595;</span>
+      <p class="text-sm text-navy/80 leading-relaxed">{feeDropCallout}</p>
+    </div>
+  </section>
+
+  <!-- COMPARE PACKAGES -->
+  <section class="bg-cream/50">
+    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">Compare</span>
+      <h2 class="font-display text-3xl md:text-4xl mt-4 mb-6 max-w-xl">Standard vs Advanced vs Premium.</h2>
+      <p class="text-sm text-navy/50 mb-8 md:hidden">&larr; Swipe to compare all three tiers &rarr;</p>
+
+      <div class="overflow-x-auto relative">
+        <table class="w-full border-collapse min-w-[640px]">
+          <thead>
+            <tr class="border-b border-navy/15">
+              <th class="text-left py-4 pr-4 text-sm font-semibold text-navy/60">Feature</th>
+              {packageTiers.map(tier => (
+                <th class="text-left py-4 px-4 font-display text-lg font-semibold">{tier.name}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody class="text-sm">
+            {comparisonRows.map(row => (
+              <tr class="border-b border-navy/10">
+                <td class="py-4 pr-4 text-navy/60">{row.feature}</td>
+                {row.values.map(v => (
+                  <td class={`py-4 px-4 ${v === '✓' ? 'text-teal' : v === '—' ? 'text-navy/30' : ''}`}>{v}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECT-BASED SERVICES -->
+  <section class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+    <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">Project-Based Services</span>
+    <h2 class="font-display text-3xl md:text-4xl mt-4 mb-4 max-w-xl">One-off projects, scoped to you.</h2>
+    <p class="text-sm text-navy/50 mb-8">Tap a service to see what's included.</p>
+    <div class="mb-16">
+      <ExpandablePillList items={projectBasedServices} groupId="packages-project" />
+    </div>
+
+    <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">Add-On Services</span>
+    <h2 class="font-display text-3xl md:text-4xl mt-4 mb-4 max-w-xl">Extend any package as you grow.</h2>
+    <p class="text-sm text-navy/50 mb-8">Tap a service to see what's included.</p>
+    <ExpandablePillList items={addOnServices} groupId="packages-addon" />
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="relative bg-navy text-white overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6 py-24 md:py-32 text-center">
+      <h2 class="font-display text-4xl md:text-5xl leading-tight max-w-2xl mx-auto">
+        Not sure which package is <span class="accent-slant text-teal">right for you?</span>
+      </h2>
+      <p class="mt-6 text-white/65 max-w-lg mx-auto">Tell us about your brand and goals — we'll recommend the right fit, no pressure.</p>
+      <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+        <a href="/contact" class="inline-flex items-center justify-center bg-coral text-white text-sm font-semibold px-8 py-4 rounded-sm hover:bg-coral/90 transition-colors">
+          Let's Talk
+        </a>
+        <a href={FB_MESSENGER_URL} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center border border-white/30 text-white text-sm font-semibold px-8 py-4 rounded-sm hover:bg-white/10 transition-colors">
+          Chat on Messenger
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

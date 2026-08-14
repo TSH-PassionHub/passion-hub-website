@@ -1,0 +1,29 @@
+# Passion Hub
+
+> Branding and digital marketing agency based in Myanmar, with regional experience across Cambodia, Laos, and Thailand. 10+ years of experience across 20+ brands, covering strategy, social media management, performance marketing, website development, and SEO & AI search optimization.
+
+## Main Pages
+
+- [Home](/): Overview of Passion Hub's positioning, services, and packages.
+- [About](/about): Company background, mission, vision, and approach.
+- [Services](/services): Overview of all service categories, linking to detailed service pages.
+- [Packages](/packages): Social media management packages (Standard, Advanced, Premium) and project-based/add-on services.
+- [Insights](/insights): Marketing, branding, and digital strategy articles.
+- [Contact](/contact): How to reach Passion Hub for a consultation.
+
+## Services
+
+- [Strategy Development](/services/strategy-development): Digital strategy, content strategy, campaign strategy, and marketing planning.
+- [Social Media Management](/packages): Ongoing content, visual design, scheduling, and reporting across three tiers.
+- [Performance Marketing](/services/performance-marketing): Paid social, search (SEM), and display/video advertising.
+- [Website Development](/services/website-development): Portfolio, business, and blog/news websites, plus custom app development.
+- [SEO & AI Search Optimization](/services/seo-ai-search-optimization): Technical SEO, on-page SEO, content optimization, local SEO, and AI search optimization.
+
+## Service Area
+
+Myanmar (primary market). Regional team experience across Cambodia, Laos, and Thailand.
+
+## Contact
+
+Phone: +959 798 822 267
+Email: passionhub.dm@gmail.com

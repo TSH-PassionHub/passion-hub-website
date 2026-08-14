@@ -1,0 +1,143 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+import { SITE_URL } from '../../../lib/config';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('insights', ({ data }) => !data.draft);
+  return posts.map(post => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+// Reading time — simple word-count estimate, no stored field needed.
+const wordCount = (post.body || '').split(/\s+/).filter(Boolean).length;
+const readingTime = Math.max(1, Math.round(wordCount / 200));
+
+// Related posts — same category, excluding this one, up to 3.
+const allPosts = await getCollection('insights', ({ data }) => !data.draft);
+const relatedPosts = allPosts
+  .filter(p => p.id !== post.id && p.data.category === post.data.category)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const blogPostingSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  author: {
+    "@type": "Organization",
+    name: "Passion Hub",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Passion Hub",
+    logo: {
+      "@type": "ImageObject",
+      url: `${SITE_URL}/images/general/passion-hub-logo-source.webp`,
+    },
+  },
+  image: post.data.featuredImage ? `${SITE_URL}${post.data.featuredImage}` : undefined,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": `${SITE_URL}/insights/${post.id}/`,
+  },
+};
+---
+
+<Layout title={`${post.data.title} | Passion Hub`} description={post.data.description}>
+  <script type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
+
+  <article>
+    <section class="bg-navy text-white">
+      <div class="max-w-3xl mx-auto px-6 pt-24 pb-16 md:pt-28 md:pb-20">
+        <a href="/insights" class="text-sm text-teal font-semibold hover:underline">&larr; Back to Insights</a>
+        <div class="flex items-center gap-3 text-xs mt-8 mb-6 flex-wrap">
+          <span class="uppercase tracking-widest text-teal font-semibold">{post.data.category}</span>
+          <span class="text-white/40">&middot;</span>
+          <time datetime={post.data.pubDate.toISOString()} class="text-white/60">{dateFmt(post.data.pubDate)}</time>
+          <span class="text-white/40">&middot;</span>
+          <span class="text-white/60">{readingTime} min read</span>
+          <span class="text-white/40">&middot;</span>
+          <span class="text-white/60">By Passion Hub Team</span>
+        </div>
+        <h1 class="font-display text-3xl md:text-5xl leading-tight">{post.data.title}</h1>
+      </div>
+    </section>
+
+    {post.data.featuredImage && (
+      <div class="max-w-4xl mx-auto px-6 -mt-10 md:-mt-14 relative">
+        <div class="aspect-[16/9] overflow-hidden border border-navy/10">
+          <img src={post.data.featuredImage} alt={post.data.featuredImageAlt || post.data.title} width="1200" height="675" class="w-full h-full object-cover" loading="eager" />
+        </div>
+      </div>
+    )}
+
+    <div class="max-w-3xl mx-auto px-6 py-16 md:py-20 prose-content">
+      <Content />
+    </div>
+
+    {relatedPosts.length > 0 && (
+      <div class="bg-cream/50 py-16 md:py-20">
+        <div class="max-w-3xl mx-auto px-6">
+          <span class="text-xs uppercase tracking-[0.2em] text-coral font-semibold">Related Insights</span>
+          <h2 class="font-display text-2xl font-semibold mt-3 mb-8">More on {post.data.category}</h2>
+          <div class="grid sm:grid-cols-3 gap-5">
+            {relatedPosts.map(rp => (
+              <a href={`/insights/${rp.id}/`} class="block group">
+                <div class="aspect-[4/3] overflow-hidden border border-navy/10 mb-3">
+                  <img src={rp.data.featuredImage || '/images/general/planning-desk.webp'} alt={rp.data.featuredImageAlt || rp.data.title} width="400" height="300" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+                </div>
+                <h3 class="text-sm font-semibold leading-snug group-hover:text-coral transition-colors">{rp.data.title}</h3>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    )}
+
+    <div class="max-w-3xl mx-auto px-6 py-10">
+      <a href="/insights" class="text-sm font-semibold text-navy inline-flex items-center gap-1.5 hover:text-coral transition-colors">
+        &larr; Back to all Insights
+      </a>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .prose-content :global(h2) {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-navy);
+  }
+  .prose-content :global(p) {
+    margin-bottom: 1.25rem;
+    line-height: 1.75;
+    color: color-mix(in srgb, var(--color-navy) 80%, transparent);
+  }
+  .prose-content :global(ul) {
+    margin: 1.25rem 0;
+    padding-left: 1.5rem;
+    list-style: disc;
+  }
+  .prose-content :global(li) {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+    color: color-mix(in srgb, var(--color-navy) 80%, transparent);
+  }
+  .prose-content :global(strong) {
+    color: var(--color-navy);
+    font-weight: 600;
+  }
+</style>
