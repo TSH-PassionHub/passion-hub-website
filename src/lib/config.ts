@@ -8,7 +8,7 @@ export const CONTACT_PHONE_DISPLAY = "+959 798 822 267";
 export const CONTACT_PHONE_HREF = "tel:+959798822267";
 
 // Get a free key at https://web3forms.com/#get-started — no password required.
-export const WEB3FORMS_ACCESS_KEY = "REPLACE_WITH_YOUR_WEB3FORMS_KEY";
+export const WEB3FORMS_ACCESS_KEY = "929bd158-c131-49b2-9cc3-381308a1aa6d";
 
 // Section-level visibility toggles — same on/off pattern as SHOW_PRICING above,
 // and SHOW_SOCIAL_LINKS below. Once Decap CMS is set up, each of these becomes a
