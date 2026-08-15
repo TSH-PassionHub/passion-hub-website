@@ -11,7 +11,7 @@ export const CONTACT_PHONE_DISPLAY = "+959 798 822 267";
 export const CONTACT_PHONE_HREF = "tel:+959798822267";
 
 // Get a free key at https://web3forms.com/#get-started — no password required.
-export const WEB3FORMS_ACCESS_KEY = "REPLACE_WITH_YOUR_WEB3FORMS_KEY";
+export const WEB3FORMS_ACCESS_KEY = "929bd158-c131-49b2-9cc3-381308a1aa6d";
 
 // "Service Interested In" dropdown — shared by the main Contact page form and
 // every quick-contact form (ContactCTA) so the list can't drift between them.
