@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Logo from '../components/Logo.astro';
 import { SITE_URL } from '../lib/config';
 import { servicesData } from '../lib/servicesData';
+import siteSettings from '../content/settings/site.json';
 
 interface Props {
   title: string;
@@ -13,7 +14,7 @@ interface Props {
 }
 const {
   title,
-  description = "Passion Hub — Branding & Digital Marketing agency with 10+ years of experience across Myanmar, Cambodia, Laos, and Thailand.",
+  description = siteSettings.defaultMetaDescription,
   ogImage = "/images/general/og-image.jpg",
   noindex = false,
 } = Astro.props;
@@ -82,8 +83,20 @@ const organizationSchema = {
 
     <title>{title}</title>
     <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    {siteSettings.gtmContainerId && (
+      <script is:inline define:vars={{ gtmId: siteSettings.gtmContainerId }}>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!=='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',gtmId);
+      </script>
+    )}
+    {siteSettings.customHeadCode && <Fragment set:html={siteSettings.customHeadCode} />}
   </head>
   <body class="bg-offwhite text-navy font-body antialiased">
+    {siteSettings.gtmContainerId && (
+      <noscript>
+        <iframe src={`https://www.googletagmanager.com/ns.html?id=${siteSettings.gtmContainerId}`} height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager" />
+      </noscript>
+    )}
+    {siteSettings.customBodyCode && <Fragment set:html={siteSettings.customBodyCode} />}
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-navy text-white px-4 py-2 rounded z-50">Skip to content</a>
 
     <header class="sticky top-0 z-40 bg-offwhite/90 backdrop-blur border-b border-navy/10">

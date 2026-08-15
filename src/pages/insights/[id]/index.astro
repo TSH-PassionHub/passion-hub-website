@@ -54,7 +54,7 @@ const blogPostingSchema = {
 };
 ---
 
-<Layout title={`${post.data.title} | Passion Hub`} description={post.data.description}>
+<Layout title={post.data.seo?.seoTitle || `${post.data.title} | Passion Hub`} description={post.data.seo?.seoDescription || post.data.description}>
   <script type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
 
   <article>

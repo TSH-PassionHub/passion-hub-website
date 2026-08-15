@@ -7,10 +7,14 @@ const insights = defineCollection({
     title: z.string(),
     description: z.string(),
     pubDate: z.date(),
-    category: z.enum(['Marketing', 'Branding', 'Social Media', 'Content', 'Digital & AI']).default('Marketing'),
+    category: z.string().default('Marketing'),
     featuredImage: z.string().optional(),
     featuredImageAlt: z.string().optional(),
     draft: z.boolean().default(false),
+    seo: z.object({
+      seoTitle: z.string().optional(),
+      seoDescription: z.string().optional(),
+    }).optional(),
   }),
 });
 

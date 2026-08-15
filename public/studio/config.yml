@@ -1,0 +1,71 @@
+backend:
+  name: github
+  repo: TSH-PassionHub/passion-hub-website
+  branch: main
+
+# Draft -> Review -> Publish workflow. New/edited entries go to a pending
+# state and a preview link before anything goes live on the real site.
+publish_mode: editorial_workflow
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  # ---------------------------------------------------------------------
+  # INSIGHTS / BLOG POSTS — maps directly to the existing markdown files
+  # in src/content/insights/. Nothing about how the site reads these
+  # files changes; the CMS just edits the same files GitHub already has.
+  # ---------------------------------------------------------------------
+  - name: "insights"
+    label: "Insights (Blog Posts)"
+    folder: "src/content/insights"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} — {{pubDate}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Short Description (card + fallback SEO description)", name: "description", widget: "text" }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Category", name: "category", widget: "string", hint: "Free text — reuse an existing category (e.g. Marketing, Social Media, Digital & AI) to group posts together, or create a new one." }
+      - { label: "Featured Image", name: "featuredImage", widget: "image", media_library: { config: { multiple: false } } }
+      - { label: "Featured Image Alt Text", name: "featuredImageAlt", widget: "string", hint: "Describe the image for accessibility and SEO — avoid generic text." }
+      - label: "SEO"
+        name: "seo"
+        widget: "object"
+        collapsed: true
+        required: false
+        fields:
+          - { label: "SEO Title Override", name: "seoTitle", widget: "string", required: false, hint: "Leave blank to use the Title above." }
+          - { label: "SEO Description Override", name: "seoDescription", widget: "text", required: false, hint: "Leave blank to use the Short Description above." }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  # ---------------------------------------------------------------------
+  # SITE SETTINGS — a single file, not a list of entries. Covers SEO
+  # fallback defaults and the tag/script injection section (GTM, plus
+  # any other head/body code — Meta Pixel, verification tags, etc.)
+  # ---------------------------------------------------------------------
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - name: "general"
+        label: "SEO & Tag Manager"
+        file: "src/content/settings/site.json"
+        fields:
+          - { label: "Default Meta Description", name: "defaultMetaDescription", widget: "text", hint: "Used sitewide on any page that doesn't set its own description." }
+          - { label: "Google Tag Manager Container ID", name: "gtmContainerId", widget: "string", required: false, hint: "e.g. GTM-XXXXXXX — leave blank to disable GTM entirely." }
+          - { label: "Custom <head> Code", name: "customHeadCode", widget: "text", required: false, hint: "Raw HTML/script, inserted just before </head> on every page. Use for verification meta tags, extra pixels, etc." }
+          - { label: "Custom <body> Code", name: "customBodyCode", widget: "text", required: false, hint: "Raw HTML/script, inserted just after <body> opens on every page." }
+
+      - name: "redirects"
+        label: "Redirects"
+        file: "src/content/settings/redirects.json"
+        fields:
+          - name: "redirects"
+            label: "Redirects"
+            widget: "list"
+            label_singular: "Redirect"
+            summary: "{{from}} → {{to}}"
+            fields:
+              - { label: "From (old path)", name: "from", widget: "string", hint: "e.g. /old-page" }
+              - { label: "To (new path or full URL)", name: "to", widget: "string", hint: "e.g. /new-page" }
+              - { label: "Status Code", name: "status", widget: "select", options: ["301", "302"], default: "301" }
