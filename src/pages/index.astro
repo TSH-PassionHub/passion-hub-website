@@ -13,8 +13,7 @@ import {
 
 const stats = [
   { target: 10, suffix: '+', label: 'Years of Industry Experience' },
-  { target: 20, suffix: '+', label: 'Brands' },
-  { target: 4, suffix: '', label: 'Countries (Regional Experience)' },
+  { target: 4, suffix: '', label: 'Countries (Regional Expertise)' },
   { target: 100, suffix: '%', label: 'Client-First Process' },
 ];
 
@@ -60,9 +59,9 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day:
   </section>
 
   <section class="max-w-6xl mx-auto px-6 -mt-2 md:mt-0 py-16 md:py-24">
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 md:gap-6 [&>*]:min-w-0">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-6 md:gap-6">
       {stats.map((s, i) => (
-        <div class={`flex flex-col items-center text-center ${i > 0 ? 'sm:pl-6 sm:border-l border-navy/10' : ''}`}>
+        <div class={`flex flex-col items-center text-center ${i > 0 ? 'border-t sm:border-t-0 sm:border-l border-navy/10 pt-6 sm:pt-0 sm:pl-6' : ''}`}>
           <div class="stat-number font-display text-4xl md:text-5xl font-semibold text-navy" data-target={s.target} data-suffix={s.suffix}>0{s.suffix}</div>
           <div class="mt-2 text-sm text-navy/78 leading-snug">{s.label}</div>
         </div>

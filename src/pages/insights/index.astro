@@ -1,7 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import ContactCTA from '../../components/ContactCTA.astro';
 import { getCollection } from 'astro:content';
-import { insightCategories, FB_MESSENGER_URL, pageMeta } from '../../lib/config';
+import { insightCategories, pageMeta } from '../../lib/config';
 
 const allPosts = (await getCollection('insights', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -101,21 +102,12 @@ const readTime = (body: string | undefined) => Math.max(1, Math.round((body || '
     <p id="no-results" class="hidden text-navy/62 text-sm mt-6">No posts in this category yet.</p>
   </section>
 
-  <section class="relative bg-navy text-white overflow-hidden">
-    <div class="max-w-6xl mx-auto px-6 py-24 md:py-32 text-center">
-      <h2 class="font-display text-4xl md:text-5xl leading-tight max-w-2xl mx-auto">
-        Need help with your <span class="accent-slant text-teal">marketing?</span>
-      </h2>
-      <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-        <a href="/contact" class="inline-flex items-center justify-center bg-coral text-white text-sm font-semibold px-8 py-4 rounded-sm hover:bg-coral/90 transition-colors">
-          Let's Talk
-        </a>
-        <a href={FB_MESSENGER_URL} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center border border-white/30 text-white text-sm font-semibold px-8 py-4 rounded-sm hover:bg-white/10 transition-colors">
-          Chat on Messenger
-        </a>
-      </div>
-    </div>
-  </section>
+  <ContactCTA
+    id="insights-cta"
+    heading="Need help with your marketing?"
+    subtext="Tell us a bit about your brand and we'll get back to you within one business day."
+    sourceLabel="Insights Page"
+  />
 </Layout>
 
 <style>

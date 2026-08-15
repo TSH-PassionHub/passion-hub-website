@@ -1,8 +1,11 @@
 // Central site config — flip SHOW_PRICING to true when ready to reveal package prices.
 export const SHOW_PRICING = false;
 
-export const SITE_URL = "https://passionhub.example.com"; // TODO: replace with real domain once connected
+// Update this if/when a custom domain is connected in Cloudflare Pages.
+export const SITE_URL = "https://passion-hub-website.pages.dev";
 export const FB_MESSENGER_URL = "https://m.me/PassionHub.BrandingAndDigitalMarketing";
+export const VIBER_DISPLAY = "09 443 230 418";
+export const VIBER_HREF = "viber://chat?number=%2B959443230418";
 export const CONTACT_EMAIL = "passionhub.dm@gmail.com";
 export const CONTACT_PHONE_DISPLAY = "+959 798 822 267";
 export const CONTACT_PHONE_HREF = "tel:+959798822267";

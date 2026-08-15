@@ -2,6 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import {
   FB_MESSENGER_URL,
+  VIBER_DISPLAY,
+  VIBER_HREF,
   CONTACT_EMAIL,
   CONTACT_PHONE_DISPLAY,
   CONTACT_PHONE_HREF,
@@ -90,6 +92,17 @@ import {
               <span>
                 <div class="text-sm font-semibold">Facebook Messenger</div>
                 <div class="text-xs text-navy/65">Usually fastest for a quick reply</div>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href={VIBER_HREF} class="flex items-center gap-3 group">
+              <span class="w-10 h-10 rounded-full bg-navy text-white flex items-center justify-center shrink-0 group-hover:bg-teal transition-colors">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 5.9 2 10.7c0 2.8 1.5 5.3 3.9 6.9-.1.9-.5 2.4-.6 2.8-.1.4.1.4.3.3.2-.1 2.5-1.6 3.5-2.3.9.2 1.9.3 2.9.3 5.5 0 10-3.9 10-8.7S17.5 2 12 2z"/></svg>
+              </span>
+              <span>
+                <div class="text-sm font-semibold">Viber: {VIBER_DISPLAY}</div>
+                <div class="text-xs text-navy/65">Chat with us on Viber</div>
               </span>
             </a>
           </li>

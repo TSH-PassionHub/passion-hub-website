@@ -1,5 +1,6 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
+import ContactCTA from '../../../components/ContactCTA.astro';
 import { getCollection, render } from 'astro:content';
 import { SITE_URL } from '../../../lib/config';
 
@@ -110,6 +111,13 @@ const blogPostingSchema = {
       </a>
     </div>
   </article>
+
+  <ContactCTA
+    id="post-cta"
+    heading="Enjoyed this? Let's talk about your brand."
+    subtext="Tell us a bit about what you're working on and we'll get back to you within one business day."
+    sourceLabel={`Insight Post: ${post.data.title}`}
+  />
 </Layout>
 
 <style>
