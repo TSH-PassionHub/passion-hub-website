@@ -1,0 +1,222 @@
+---
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+import { SITE_URL } from '../lib/config';
+import { servicesData } from '../lib/servicesData';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Absolute or root-relative path to a 1200x630 image. Defaults to the sitewide OG image. */
+  ogImage?: string;
+  noindex?: boolean;
+}
+const {
+  title,
+  description = "Passion Hub — Branding & Digital Marketing agency with 10+ years of experience across Myanmar, Cambodia, Laos, and Thailand.",
+  ogImage = "/images/general/og-image.jpg",
+  noindex = false,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, SITE_URL).toString();
+const ogImageURL = new URL(ogImage, SITE_URL).toString();
+
+const navItems = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Services', href: '/services' },
+  { label: 'Packages', href: '/packages' },
+  { label: 'Insights', href: '/insights' },
+  { label: 'Contact', href: '/contact' },
+];
+
+// Submenu items for "Services" — sourced directly from servicesData so all
+// 5 core services always appear here and never fall out of sync with the pages.
+// Training & Workshops is appended manually since it uses its own page template.
+const serviceLinks = [
+  ...servicesData.map(s => ({ label: s.eyebrow, href: `/services/${s.slug}` })),
+  { label: 'Marketing Training & Workshops', href: '/services/training-workshops' },
+];
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Passion Hub",
+  alternateName: "Passion Hub Branding & Digital Marketing",
+  url: SITE_URL,
+  logo: `${SITE_URL}/images/general/passion-hub-logo-source.webp`,
+  description: "Branding and digital marketing agency based in Myanmar, with regional experience across Cambodia, Laos, and Thailand.",
+  areaServed: ["Myanmar", "Cambodia", "Laos", "Thailand"],
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+959-798-822-267",
+    email: "passionhub.dm@gmail.com",
+    contactType: "customer service",
+  },
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/images/general/favicon-source.png" sizes="512x512" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content="Passion Hub" />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <title>{title}</title>
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+  </head>
+  <body class="bg-offwhite text-navy font-body antialiased">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-navy text-white px-4 py-2 rounded z-50">Skip to content</a>
+
+    <header class="sticky top-0 z-40 bg-offwhite/90 backdrop-blur border-b border-navy/10">
+      <div class="max-w-6xl mx-auto px-6 flex items-center justify-between h-20">
+        <a href="/" aria-label="Passion Hub home">
+          <Logo variant="full" />
+        </a>
+        <nav class="hidden lg:flex items-center gap-8" aria-label="Main">
+          {navItems.map(item => (
+            item.label === 'Services' ? (
+              <div class="relative group">
+                <a href={item.href} class="inline-flex items-center gap-1 text-[15px] font-medium text-navy hover:text-navy-light transition-colors">
+                  {item.label}
+                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true" class="mt-0.5 transition-transform group-hover:rotate-180">
+                    <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+                <div class="invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-150 absolute left-0 top-full pt-3 z-50">
+                  <ul class="min-w-[260px] bg-offwhite border border-navy/10 rounded-sm shadow-lg py-2">
+                    {serviceLinks.map(link => (
+                      <li><a href={link.href} class="block px-4 py-2.5 text-sm font-medium text-navy/80 hover:text-navy hover:bg-navy/5 transition-colors">{link.label}</a></li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ) : (
+              <a href={item.href} class="text-[15px] font-medium text-navy hover:text-navy-light transition-colors">{item.label}</a>
+            )
+          ))}
+        </nav>
+        <a href="/contact" class="hidden lg:inline-flex items-center bg-navy text-white text-sm font-semibold px-5 py-2.5 rounded-sm hover:bg-navy-light transition-colors">
+          Let's Talk
+        </a>
+        <button id="menu-btn" class="lg:hidden p-2" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="#0F1F3D" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <nav id="mobile-menu" class="hidden lg:hidden border-t border-navy/10 bg-offwhite" aria-label="Mobile">
+        <div class="px-6 py-4 flex flex-col gap-4">
+          {navItems.map(item => (
+            item.label === 'Services' ? (
+              <div>
+                <a href={item.href} class="text-[15px] font-medium text-navy">{item.label}</a>
+                <div class="mt-2 ml-3 flex flex-col gap-2 border-l border-navy/15 pl-3">
+                  {serviceLinks.map(link => (
+                    <a href={link.href} class="text-sm font-medium text-navy/85 hover:text-navy transition-colors">{link.label}</a>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <a href={item.href} class="text-[15px] font-medium text-navy">{item.label}</a>
+            )
+          ))}
+          <a href="/contact" class="inline-flex items-center justify-center bg-navy text-white text-sm font-semibold px-5 py-2.5 rounded-sm">Let's Talk</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="bg-navy text-white">
+      <div class="h-[3px] bg-gradient-to-r from-teal via-teal to-coral"></div>
+      <div class="max-w-6xl mx-auto px-6 py-14 grid md:grid-cols-4 gap-10 text-center md:text-left">
+        <div>
+          <div class="flex items-center justify-center md:justify-start gap-3 mb-4">
+            <img src="/images/general/footer-logo.png" alt="Passion Hub" width="160" height="48" class="h-8 w-auto" />
+          </div>
+          <p class="text-white/60 text-sm leading-relaxed max-w-xs mx-auto md:mx-0">Marketing That Moves Your Business Forward. Branding &amp; Digital Marketing for Growing Businesses.</p>
+        </div>
+        <div>
+          <div class="text-xs uppercase tracking-widest text-teal font-semibold mb-4">Quick Links</div>
+          <ul class="space-y-2 text-sm text-white/80">
+            {navItems.map(item => (
+              <li><a href={item.href} class="hover:text-teal transition-colors">{item.label}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <div class="text-xs uppercase tracking-widest text-teal font-semibold mb-4">Services</div>
+          <ul class="space-y-2 text-sm text-white/80">
+            {serviceLinks.map(link => (
+              <li><a href={link.href} class="hover:text-teal transition-colors">{link.label}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <div class="text-xs uppercase tracking-widest text-teal font-semibold mb-4">Contact</div>
+          <ul class="space-y-2 text-sm text-white/80">
+            <li><a href="tel:+959798822267" class="hover:text-teal transition-colors">+959 798 822 267</a></li>
+            <li><a href="mailto:passionhub.dm@gmail.com" class="hover:text-teal transition-colors">passionhub.dm@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/10">
+        <div class="max-w-6xl mx-auto px-6 py-5 text-xs text-white/50 flex flex-col sm:flex-row justify-between items-center sm:items-stretch text-center sm:text-left gap-2">
+          <span>&copy; {new Date().getFullYear()} Passion Hub. All rights reserved.</span>
+          <span>Branding &amp; Digital Marketing</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const btn = document.getElementById('menu-btn');
+      const menu = document.getElementById('mobile-menu');
+      btn?.addEventListener('click', () => {
+        const isHidden = menu?.classList.contains('hidden');
+        menu?.classList.toggle('hidden');
+        btn.setAttribute('aria-expanded', String(isHidden));
+      });
+
+      // Lightweight scroll-reveal — CSS handles the transition, JS just toggles a class.
+      // Progressive enhancement: elements are visible by default in CSS. Only if this
+      // script runs successfully do we hide-then-reveal them; a JS failure never
+      // leaves content permanently hidden.
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const revealEls = document.querySelectorAll('.reveal');
+      if (!prefersReducedMotion && 'IntersectionObserver' in window && revealEls.length) {
+        revealEls.forEach((el) => el.classList.add('pre-reveal'));
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+        );
+        revealEls.forEach((el) => observer.observe(el));
+      }
+    </script>
+  </body>
+</html>
