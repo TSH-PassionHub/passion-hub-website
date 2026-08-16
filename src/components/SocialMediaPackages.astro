@@ -4,7 +4,6 @@
 // pages always show identical, up-to-date package details — edit here once.
 import {
   SHOW_PRICING,
-  FB_MESSENGER_URL,
   packageTiers,
   comparisonRows,
   feeDropCallout,
@@ -59,9 +58,7 @@ const { eyebrow = 'Social Media Packages', heading = 'Ongoing management, three 
         </ul>
 
         <a
-          href={SHOW_PRICING ? '/contact' : FB_MESSENGER_URL}
-          target={SHOW_PRICING ? undefined : '_blank'}
-          rel={SHOW_PRICING ? undefined : 'noopener noreferrer'}
+          href="/contact"
           class={`mt-8 inline-flex items-center justify-center text-sm font-semibold px-6 py-3 rounded-sm transition-colors ${tier.featured ? 'bg-coral text-white hover:bg-coral/90' : 'bg-navy text-white hover:bg-navy-light'}`}
         >
           {SHOW_PRICING ? 'Get Started' : 'Get a Quote'}
