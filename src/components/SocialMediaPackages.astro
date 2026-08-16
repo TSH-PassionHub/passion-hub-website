@@ -23,7 +23,7 @@ const { eyebrow = 'Social Media Packages', heading = 'Ongoing management, three 
 
   <div class="grid md:grid-cols-3 gap-6 mt-10">
     {packageTiers.map(tier => (
-      <div class={`reveal p-8 border flex flex-col ${tier.featured ? 'bg-navy text-white border-navy' : 'bg-offwhite border-navy/10'}`}>
+      <div id={`package-${tier.name.toLowerCase()}`} class={`reveal scroll-mt-28 p-8 border flex flex-col ${tier.featured ? 'bg-navy text-white border-navy' : 'bg-offwhite border-navy/10'}`}>
         {tier.featured && <span class="text-xs uppercase tracking-widest text-teal font-semibold mb-2">Most popular</span>}
         <div class="flex items-baseline gap-2">
           <h3 class="font-display text-2xl font-semibold">{tier.name}</h3>

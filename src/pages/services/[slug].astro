@@ -39,7 +39,14 @@ const serviceSchema = {
 };
 ---
 
-<Layout title={service.metaTitle} description={service.metaDescription}>
+<Layout
+  title={service.metaTitle}
+  description={service.metaDescription}
+  breadcrumbs={[
+    { name: 'Services', url: '/services' },
+    { name: service.eyebrow, url: `/services/${service.slug}` },
+  ]}
+>
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
 

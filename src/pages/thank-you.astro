@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { pageMeta } from '../lib/config';
 ---
 
-<Layout title={pageMeta.thankYou.title} description={pageMeta.thankYou.description}>
+<Layout title={pageMeta.thankYou.title} description={pageMeta.thankYou.description} noindex={true}>
   <section class="relative bg-navy text-white overflow-hidden">
     <div class="absolute inset-0 opacity-[0.07]" style="background-image: repeating-linear-gradient(115deg, transparent, transparent 40px, white 41px, white 42px);"></div>
     <div class="max-w-3xl mx-auto px-6 py-28 md:py-36 relative text-center">

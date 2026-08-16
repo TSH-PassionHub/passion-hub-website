@@ -41,10 +41,27 @@ const faqSchema = {
     acceptedAnswer: { "@type": "Answer", text: f.answer },
   })),
 };
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Marketing Training & Workshops",
+  description: pageMeta.training.description,
+  provider: { "@type": "Organization", name: "Passion Hub" },
+  areaServed: "Myanmar",
+};
 ---
 
-<Layout title={pageMeta.training.title} description={pageMeta.training.description}>
+<Layout
+  title={pageMeta.training.title}
+  description={pageMeta.training.description}
+  breadcrumbs={[
+    { name: 'Services', url: '/services' },
+    { name: 'Marketing Training & Workshops', url: '/services/training-workshops' },
+  ]}
+>
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
 
   <section class="bg-navy text-white">
     <div class="max-w-4xl mx-auto px-6 pt-24 pb-20 md:pt-28 md:pb-24">

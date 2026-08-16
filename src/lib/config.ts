@@ -1,17 +1,21 @@
 // Central site config — flip SHOW_PRICING to true when ready to reveal package prices.
 export const SHOW_PRICING = false;
 
-// Update this if/when a custom domain is connected in Cloudflare Pages.
-export const SITE_URL = "https://passion-hub-website.pages.dev";
+// Confirmed live in Netlify (Production domains, Aug 2026): passionhubmarketing.com
+// is the Primary domain, with Netlify DNS (not Cloudflare DNS) and a valid
+// Let's Encrypt SSL certificate already active. This is the correct canonical
+// URL. If this ever changes (e.g. domain issues resurface), update this value
+// and the matching `site` value in astro.config.mjs together.
+export const SITE_URL = "https://passionhubmarketing.com";
 export const FB_MESSENGER_URL = "https://m.me/PassionHub.BrandingAndDigitalMarketing";
 export const VIBER_DISPLAY = "09 443 230 418";
-export const VIBER_HREF = "viber://chat?number=959443230418";
+export const VIBER_HREF = "viber://chat?number=%2B959443230418";
 export const CONTACT_EMAIL = "passionhub.dm@gmail.com";
 export const CONTACT_PHONE_DISPLAY = "+959 798 822 267";
 export const CONTACT_PHONE_HREF = "tel:+959798822267";
 
 // Get a free key at https://web3forms.com/#get-started — no password required.
-export const WEB3FORMS_ACCESS_KEY = "929bd158-c131-49b2-9cc3-381308a1aa6d";
+export const WEB3FORMS_ACCESS_KEY = "REPLACE_WITH_YOUR_WEB3FORMS_KEY";
 
 // "Service Interested In" dropdown — shared by the main Contact page form and
 // every quick-contact form (ContactCTA) so the list can't drift between them.

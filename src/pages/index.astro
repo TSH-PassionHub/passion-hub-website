@@ -130,7 +130,11 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day:
       <h2 class="font-display text-3xl md:text-4xl mt-4 mb-14 max-w-xl">Social media management, three ways to scale.</h2>
       <div class="grid md:grid-cols-3 gap-6">
         {packageTiers.map(tier => (
-          <div class={`p-8 border ${tier.featured ? 'bg-navy text-white border-navy' : 'bg-offwhite border-navy/10'}`}>
+          <a
+            href={`/packages#package-${tier.name.toLowerCase()}`}
+            aria-label={`View ${tier.name} package details`}
+            class={`block p-8 border transition-shadow hover:shadow-lg ${tier.featured ? 'bg-navy text-white border-navy' : 'bg-offwhite border-navy/10 hover:border-navy/25'}`}
+          >
             {tier.featured && <span class="text-xs uppercase tracking-widest text-teal font-semibold">Most popular</span>}
             <div class="flex items-baseline gap-2 mt-2">
               <h3 class="font-display text-2xl font-semibold">{tier.name}</h3>
@@ -144,7 +148,7 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day:
                 <span class={`inline-block text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full ${tier.featured ? 'bg-teal/20 text-teal' : 'bg-coral/10 text-coral'}`}>Custom Quote</span>
               )}
             </div>
-          </div>
+          </a>
         ))}
       </div>
       <a href="/packages" class="inline-flex items-center gap-1.5 mt-8 text-sm font-semibold text-navy hover:text-coral transition-colors">

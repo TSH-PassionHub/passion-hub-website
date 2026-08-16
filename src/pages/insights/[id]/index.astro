@@ -54,7 +54,14 @@ const blogPostingSchema = {
 };
 ---
 
-<Layout title={post.data.seo?.seoTitle || `${post.data.title} | Passion Hub`} description={post.data.seo?.seoDescription || post.data.description}>
+<Layout
+  title={post.data.seo?.seoTitle || `${post.data.title} | Passion Hub`}
+  description={post.data.seo?.seoDescription || post.data.description}
+  breadcrumbs={[
+    { name: 'Insights', url: '/insights' },
+    { name: post.data.title, url: `/insights/${post.id}/` },
+  ]}
+>
   <script type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
 
   <article>

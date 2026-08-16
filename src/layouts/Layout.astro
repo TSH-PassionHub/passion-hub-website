@@ -11,12 +11,15 @@ interface Props {
   /** Absolute or root-relative path to a 1200x630 image. Defaults to the sitewide OG image. */
   ogImage?: string;
   noindex?: boolean;
+  /** Optional breadcrumb trail for this page, e.g. [{ name: 'Services', url: '/services' }, { name: 'SEO', url: '/services/seo' }]. Home is added automatically. */
+  breadcrumbs?: { name: string; url: string }[];
 }
 const {
   title,
   description = siteSettings.defaultMetaDescription,
   ogImage = "/images/general/og-image.jpg",
   noindex = false,
+  breadcrumbs,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, SITE_URL).toString();
@@ -55,6 +58,29 @@ const organizationSchema = {
     contactType: "customer service",
   },
 };
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Passion Hub",
+  url: SITE_URL,
+};
+
+// Breadcrumbs are opt-in per page via the `breadcrumbs` prop. Home is always
+// item 1 so every trail is valid even on pages one level deep.
+const breadcrumbSchema = breadcrumbs && breadcrumbs.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+    ...breadcrumbs.map((b, i) => ({
+      "@type": "ListItem",
+      position: i + 2,
+      name: b.name,
+      item: new URL(b.url, SITE_URL).toString(),
+    })),
+  ],
+} : null;
 ---
 
 <!doctype html>
@@ -83,6 +109,8 @@ const organizationSchema = {
 
     <title>{title}</title>
     <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
     {siteSettings.gtmContainerId && (
       <script is:inline define:vars={{ gtmId: siteSettings.gtmContainerId }}>
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!=='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',gtmId);
